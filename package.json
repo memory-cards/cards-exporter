@@ -1,0 +1,29 @@
+{
+  "name": "cards-exporter",
+  "version": "0.0.1",
+  "description": "Cards exporter for 'Memory Cards' project",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/memory-cards/cards-exporter.git"
+  },
+  "keywords": [
+    "anki"
+  ],
+  "author": "@vvscode",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/memory-cards/cards-exporter/issues"
+  },
+  "homepage": "https://github.com/memory-cards/cards-exporter#readme",
+  "dependencies": {
+    "next": "^7.0.2",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0"
+  }
+}

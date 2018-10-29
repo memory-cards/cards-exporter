@@ -3,10 +3,19 @@
   "version": "0.0.1",
   "description": "Cards exporter for 'Memory Cards' project",
   "main": "index.js",
+  "engines": {
+    "node": ">=10.0.0",
+    "yarn": ">=1.10.0"
+  },
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "precommit": "lint-staged",
+    "lint:prettier": "prettier --list-different --parser typescript ./pages/**.{ts,tsx}",
+    "lint:tslint": "tslint --project .",
+    "lint": "yarn lint:prettier && yarn lint:tslint",
+    "test": "yarn lint"
   },
   "repository": {
     "type": "git",
@@ -15,6 +24,17 @@
   "keywords": [
     "anki"
   ],
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "prettier --parser typescript --write",
+      "tslint --fix -p .",
+      "git add"
+    ],
+    "*.{js,json}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
   "author": "@vvscode",
   "license": "ISC",
   "bugs": {
@@ -27,9 +47,15 @@
     "next": "^7.0.2",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
+    "tslint": "^5.11.0",
     "typescript": "^3.1.3"
   },
   "devDependencies": {
-    "@types/react": "^16.4.18"
+    "@types/react": "^16.4.18",
+    "husky": "^1.1.2",
+    "lint-staged": "^8.0.0",
+    "prettier": "^1.14.3",
+    "tslint-config-airbnb": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0"
   }
 }

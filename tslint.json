@@ -1,0 +1,10 @@
+{
+  "extends": [
+    "tslint:latest",
+    "tslint-config-airbnb",
+    "tslint-config-prettier"
+  ],
+  "cliOptions": {
+    "exclude": [".next", "node_modules"]
+  }
+}

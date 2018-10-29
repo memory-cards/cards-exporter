@@ -1,7 +1,7 @@
-import * as React from 'react';
+import * as React from "react";
 
 export default class Index extends React.Component {
-  render() {
+  public render() {
     return (
       <div>
         <h1>Cards Exporter</h1>

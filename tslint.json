@@ -6,5 +6,8 @@
   ],
   "cliOptions": {
     "exclude": [".next", "node_modules"]
+  },
+  "rules": {
+    "import-name": false
   }
 }

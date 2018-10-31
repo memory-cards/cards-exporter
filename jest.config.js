@@ -6,6 +6,7 @@ module.exports = {
   },
   moduleFileExtensions: ["js", "ts", "tsx"],
   setupTestFrameworkScriptFile: "<rootDir>/enzyme.js",
+  silent: false,
   testEnvironment: "node",
   testRegex: "\\.(spec|test)\\.tsx?$",
   transform: {

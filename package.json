@@ -9,12 +9,15 @@
   },
   "scripts": {
     "dev": "nodemon -e ts,js --exec 'yarn start'",
+    "heroku-postbuild": "yarn run start:build",
     "lint:prettier": "prettier --list-different --parser typescript ./pages/**.{ts,tsx}",
     "lint:tslint": "tslint --project .",
     "lint": "yarn lint:prettier && yarn lint:tslint",
     "precommit": "lint-staged",
     "prettier": "prettier --parser typescript --write ./**/*.tsx",
-    "start": "ts-node server.ts",
+    "start:build": "NODE_ENV=production next build",
+    "start:server": "NODE_ENV=production ts-node server.ts",
+    "start": "yarn start:build && yarn start:server",
     "test:jest": "jest",
     "test": "yarn lint && yarn test:jest"
   },

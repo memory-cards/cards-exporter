@@ -1,8 +1,8 @@
 import { Router } from "express";
-import DateController from "./date";
+import dateController from "./date";
 
 const router = Router();
 
-router.get("/api/date", DateController);
+router.get("/api/date", dateController);
 
 export default router;

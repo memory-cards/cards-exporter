@@ -3,7 +3,7 @@ import next from "next";
 
 import api from "./api";
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();

@@ -1,7 +1,7 @@
 import * as httpMocks from "node-mocks-http";
-import DateController from "./index";
+import dateController from "./index";
 
-describe("DateController", () => {
+describe("dateController", () => {
   let req: httpMocks.MockRequest<any>;
   let res: httpMocks.MockResponse<any>;
 
@@ -12,7 +12,7 @@ describe("DateController", () => {
 
   it(`should send object with date and apiName`, () => {
     res.send = jest.fn();
-    DateController(req, res);
+    dateController(req, res);
 
     const sendParam = res.send.mock.calls[0][0];
     expect(sendParam).toMatchObject({ apiName: "date" });

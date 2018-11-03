@@ -1,0 +1,14 @@
+{
+  "name": "cards-exporter",
+  "description": "Node.js/React app to generate anki decks based on settings",
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}

@@ -19,6 +19,7 @@
     "start:server": "NODE_ENV=production ts-node server.ts",
     "start": "yarn start:build && yarn start:server",
     "test:jest": "jest",
+    "test:watch": "jest --watch",
     "test": "yarn lint && yarn test:jest"
   },
   "repository": {

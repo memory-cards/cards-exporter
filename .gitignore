@@ -3,4 +3,7 @@ node_modules
 .vscode
 .next
 *.log
+
 package-lock.json
+
+data/cards/

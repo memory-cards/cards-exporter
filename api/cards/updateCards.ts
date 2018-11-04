@@ -4,7 +4,7 @@ import * as cardsUtils from "../../utils/cards";
 export default (_: Request, response: Response) =>
   cardsUtils.updateCardsStorage().then(commitInfo => {
     response.send({
-      apiName: "cards",
+      apiName: "cards/update",
       commit: commitInfo
     });
   });

@@ -14,11 +14,6 @@ export const setupCardsStorage = () =>
 
 export const updateCardsStorage = () =>
   Promise.resolve()
-    .then(() =>
-      exec(`
-        cd data/cards
-        git pull
-        `)
-    )
+    .then(() => exec(["cd data/cards", "git pull"].join("\n")))
     .then(() => exec("git log -n 1"))
     .then(data => data.stdout);

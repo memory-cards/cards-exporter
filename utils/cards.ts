@@ -4,7 +4,11 @@ import * as util from "util";
 const isWin = process.platform.includes("win");
 const exec = util.promisify(childProcess.exec);
 
-const rmCommand = isWin ? "rmdir /s /q data/cards" : "rm -rf data/cards";
+// in *nix `rm` by default skip non-existing files,
+// on win* we have to use another command and pipe errors to null
+const rmCommand = isWin
+  ? `rmdir /s /q "data\\cards 1,2 > null`
+  : "rm -rf data/cards";
 
 export const setupCardsStorage = () =>
   Promise.resolve()

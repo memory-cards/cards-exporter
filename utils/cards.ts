@@ -5,9 +5,9 @@ const isWin = process.platform.includes("win") && process.platform !== "darwin";
 const exec = util.promisify(childProcess.exec);
 
 // in *nix `rm` by default skip non-existing files,
-// on win* we have to use another command and pipe errors to null
+// on win* we have to use another command and check if directory exists
 const rmCommand = isWin
-  ? `rmdir /s /q "data\\cards 1,2 > null`
+  ? `if exist "data\\cards" rmdir /s /q "data\\cards"`
   : "rm -rf data/cards";
 
 export const setupCardsStorage = () =>

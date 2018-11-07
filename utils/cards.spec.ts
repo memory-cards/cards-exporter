@@ -15,7 +15,7 @@ describe("cardsUtils", () => {
     execHistory = [];
   });
   describe("setupCardsStorage", () => {
-    it("remove old and clone new dir", async () => {
+    it("removes old and clone new dir", async () => {
       await setupCardsStorage();
       expect(execHistory).toEqual(
         expect.arrayContaining([

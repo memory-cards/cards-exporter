@@ -1,7 +1,7 @@
 import * as childProcess from "child_process";
 import * as util from "util";
 
-const isWin = process.platform.includes("win") && process.platform !== "darwin";
+const isWin = process.platform.startsWith("win");
 const exec = util.promisify(childProcess.exec);
 
 // in *nix `rm` by default skip non-existing files,

@@ -5,6 +5,9 @@ module.exports = {
     }
   },
   moduleFileExtensions: ["js", "ts", "tsx"],
+  moduleNameMapper: {
+    "^~/(.*)": "<rootDir>/$1"
+  },
   setupTestFrameworkScriptFile: "<rootDir>/enzyme.js",
   silent: false,
   testEnvironment: "node",

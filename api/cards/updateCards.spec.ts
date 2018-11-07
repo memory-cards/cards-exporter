@@ -1,10 +1,11 @@
+import "~/utils/cards";
+
 import * as httpMocks from "node-mocks-http";
-import "../../utils/cards";
 import updateCardsController from "./updateCards";
 
 const mockUpdateCardsStorage = jest.fn(() => Promise.resolve("updateInfo"));
 
-jest.mock("../../utils/cards", () => ({
+jest.mock("~/utils/cards", () => ({
   updateCardsStorage: () => mockUpdateCardsStorage()
 }));
 

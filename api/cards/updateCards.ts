@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import * as cardsUtils from "../../utils/cards";
+import * as cardsUtils from "~/utils/cards";
 
 export default (_: Request, response: Response) =>
   cardsUtils.updateCardsStorage().then(commitInfo => {

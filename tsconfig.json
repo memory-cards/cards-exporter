@@ -11,6 +11,9 @@
     "noEmit": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "paths": {
+      "~/*": ["*"]
+    },
     "preserveConstEnums": true,
     "pretty": true,
     "removeComments": false,

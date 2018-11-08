@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import next from "next";
 
 import api from "./api";
+import * as cardsUtils from "./utils/cards";
 
 const PORT = process.env.PORT || 8080;
 const dev = process.env.NODE_ENV !== "production";
@@ -10,6 +11,7 @@ const handle = app.getRequestHandler();
 
 app
   .prepare()
+  .then(() => cardsUtils.setupCardsStorage())
   .then(() => {
     const server = express();
 

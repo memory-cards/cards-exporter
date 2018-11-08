@@ -8,6 +8,8 @@
     "exclude": [".next", "node_modules"]
   },
   "rules": {
-    "import-name": false
+    "import-name": false,
+    "no-submodule-imports": [true, "~"],
+    "no-implicit-dependencies": [true, ["~"]]
   }
 }

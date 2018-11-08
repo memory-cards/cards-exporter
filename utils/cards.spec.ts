@@ -1,7 +1,7 @@
 import "child_process";
 import "fs";
 import { setupCardsStorage, updateCardsStorage } from "./cards";
-import { rmCommand } from "./env";
+import { getRemoveCommand } from "./env";
 
 let execHistory: string[] = [];
 let mockCardsExists = true;
@@ -29,7 +29,7 @@ describe("cardsUtils", () => {
         await setupCardsStorage(true);
         expect(execHistory).toEqual(
           expect.arrayContaining([
-            rmCommand("data/cards"),
+            getRemoveCommand("data/cards"),
             "git clone https://github.com/memory-cards/cards data/cards --depth 2"
           ])
         );

@@ -1,5 +1,3 @@
-import * as path from "path";
-
 export const getIsWindows = () => process.platform.startsWith("win");
 
 // in *nix `rm` by default skip non-existing files,

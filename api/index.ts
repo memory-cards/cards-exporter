@@ -1,6 +1,5 @@
 import { Router } from "express";
 import cardsRouter from "./cards";
-import createError from "./createError";
 import dateController from "./date";
 
 const router = Router();

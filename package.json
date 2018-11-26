@@ -21,7 +21,7 @@
     "start": "yarn start:build && yarn start:server",
     "test:jest": "jest",
     "test:watch": "jest --watch",
-    "test": "yarn lint && yarn test:jest"
+    "test": "yarn lint && yarn coveralls"
   },
   "repository": {
     "type": "git",

@@ -5,7 +5,7 @@
     "tslint-config-prettier"
   ],
   "cliOptions": {
-    "exclude": [".next", "node_modules"]
+    "exclude": [".next", "node_modules", "coverage"]
   },
   "rules": {
     "import-name": false,

@@ -3,6 +3,7 @@ node_modules
 .vscode
 .next
 *.log
+coverage
 
 package-lock.json
 

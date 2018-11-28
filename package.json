@@ -58,6 +58,7 @@
     "@types/react": "^16.4.18",
     "@types/react-test-renderer": "^16.0.3",
     "@zeit/next-typescript": "^1.1.1",
+    "card-types": "https://github.com/memory-cards/card-types.git",
     "coveralls": "^3.0.2",
     "cross-env": "^5.2.0",
     "enzyme": "^3.7.0",

@@ -1,4 +1,4 @@
-interface ICardDefinition {
+declare interface ICardDefinition {
   type: string;
   lang: string;
   tags: string[];

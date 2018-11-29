@@ -1,8 +1,12 @@
 import * as childProcess from "child_process";
 import * as fs from "fs";
+import * as glob from "glob";
+import * as json5 from "json5";
 import * as util from "util";
 import { getRemoveCommand } from "./env";
 
+const globPromised = util.promisify(glob.Glob);
+const readFilePromised = util.promisify(fs.readFile);
 const exec = util.promisify(childProcess.exec);
 const stat = util.promisify(fs.stat);
 
@@ -52,3 +56,15 @@ export const getCardData: (
   const processor = require(`card-types/types/${cardConfig.type}`);
   return processor(cardConfig);
 };
+
+export const getAllCards = (): Promise<ICardDefinition[]> =>
+  globPromised("data/cards/*/*.json*").then((files: string[]) =>
+    Promise.all(
+      files.map(fileName =>
+        readFilePromised(fileName).then(item => json5.parse(item.toString()))
+      )
+    )
+  );
+
+export const filterKnownCards = (list: ICardDefinition[]): ICardDefinition[] =>
+  list.filter(el => isCardTypeExists(el.type));

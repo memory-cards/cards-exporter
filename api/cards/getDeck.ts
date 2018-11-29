@@ -40,7 +40,7 @@ export default (_: Request, response: Response) =>
       });
       apkg
         .save()
-        .then((zip: string) =>
+        .then((zip: string | Buffer) =>
           writeFilePromised(`${tmpFileName}`, zip, "binary")
         )
         .then(() =>

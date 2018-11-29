@@ -19,7 +19,7 @@
     "removeComments": false,
     "skipLibCheck": true,
     "sourceMap": true,
-    "strict": false, // @todo: restore to `true`
+    "strict": true,
     "target": "ES2017",
     "typeRoots": ["node_modules/@types", "typings"]
   }

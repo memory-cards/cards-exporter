@@ -2,6 +2,7 @@ import AnkiExport from "anki-apkg-export";
 import * as fs from "fs";
 import * as tmp from "tmp";
 import * as util from "util";
+import { ICardDefinition } from "~/typings/ICardDefinition";
 import { getCardData } from "~/utils/cards";
 
 const writeFilePromised = util.promisify(fs.writeFile);

@@ -17,7 +17,7 @@
     "precommit": "lint-staged",
     "prettier": "prettier --parser typescript --write ./**/*.tsx",
     "start:build": "cross-env NODE_ENV=production next build",
-    "start:server": "cross-env NODE_ENV=production ts-node -r tsconfig-paths/register  server.ts",
+    "start:server": "cross-env NODE_ENV=production ts-node -r tsconfig-paths/register -p ./tsconfig.json",
     "start": "yarn start:build && yarn start:server",
     "test:jest": "jest",
     "test:watch": "jest --watch",

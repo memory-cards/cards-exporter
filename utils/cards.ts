@@ -3,6 +3,7 @@ import * as fs from "fs";
 import * as glob from "glob";
 import * as json5 from "json5";
 import * as util from "util";
+import { ICardDefinition } from "~/typings/ICardDefinition";
 import { getRemoveCommand } from "./env";
 
 const globPromised = util.promisify(glob.Glob);

@@ -1,10 +1,18 @@
 import "child_process";
 import "fs";
-import { setupCardsStorage, updateCardsStorage } from "./cards";
+
+import {
+  getCardData,
+  isCardTypeExists,
+  setupCardsStorage,
+  updateCardsStorage
+} from "./cards";
 import { getRemoveCommand } from "./env";
 
 let execHistory: string[] = [];
 let mockCardsExists = true;
+let mockFileContent;
+mockFileContent = `{ type: "xxxx" }`;
 
 jest.mock("child_process", () => ({
   exec: (command: string, cb: (_: null, result: string) => void) => {
@@ -14,9 +22,21 @@ jest.mock("child_process", () => ({
 }));
 
 jest.mock("fs", () => ({
+  readFile: (_: string, cb: (err: any, result: any) => void) =>
+    cb(null, {
+      toString: () => mockFileContent
+    }),
   stat: (_: string, cb: (err: any, result: any) => void) =>
     cb(null, mockCardsExists)
 }));
+
+jest.mock(
+  "card-types/types/some_type",
+  () => obj => ({
+    processed: obj
+  }),
+  { virtual: true }
+);
 
 describe("cardsUtils", () => {
   beforeEach(() => {
@@ -66,5 +86,26 @@ describe("cardsUtils", () => {
         expect.arrayContaining(["cd data/cards\ngit pull", "git log -n 1"])
       );
     });
+  });
+
+  describe("isCardTypeExists", () => {
+    it("returns false for non-existing module", () =>
+      expect(isCardTypeExists("some unknown module")).toEqual(false));
+
+    it("returns true for existing module", () =>
+      expect(isCardTypeExists("some_type")).toEqual(true));
+  });
+
+  describe("getCardData", () => {
+    it("should call processor and return result", () =>
+      expect(
+        getCardData({
+          type: "some_type"
+        })
+      ).toMatchObject({
+        processed: {
+          type: "some_type"
+        }
+      }));
   });
 });

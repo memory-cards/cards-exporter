@@ -1,8 +1,7 @@
 import "child_process";
 import "fs";
-import * as glob from "glob";
+import "glob";
 
-import { ICardDefinition } from "~/typings/ICardDefinition";
 import {
   filterKnownCards,
   getAllCards,
@@ -34,7 +33,7 @@ jest.mock("fs", () => ({
 
 jest.mock(
   "card-types/types/some_type",
-  () => obj => ({
+  () => (obj: any) => ({
     processed: obj
   }),
   { virtual: true }

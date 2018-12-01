@@ -1,7 +1,9 @@
 import "child_process";
 import "fs";
+import * as glob from "glob";
 
 import {
+  getAllCards,
   getCardData,
   isCardTypeExists,
   setupCardsStorage,
@@ -11,8 +13,6 @@ import { getRemoveCommand } from "./env";
 
 let execHistory: string[] = [];
 let mockCardsExists = true;
-let mockFileContent;
-mockFileContent = `{ type: "xxxx" }`;
 
 jest.mock("child_process", () => ({
   exec: (command: string, cb: (_: null, result: string) => void) => {
@@ -22,9 +22,9 @@ jest.mock("child_process", () => ({
 }));
 
 jest.mock("fs", () => ({
-  readFile: (_: string, cb: (err: any, result: any) => void) =>
+  readFile: (fileName: string, cb: (err: any, result: any) => void) =>
     cb(null, {
-      toString: () => mockFileContent
+      toString: () => `{ type: "${fileName}" }`
     }),
   stat: (_: string, cb: (err: any, result: any) => void) =>
     cb(null, mockCardsExists)
@@ -37,6 +37,14 @@ jest.mock(
   }),
   { virtual: true }
 );
+
+jest.mock("glob", () => ({
+  Glob: (pattern: string, cb: (_: null, data: string[]) => void) =>
+    cb(null, [
+      `${pattern} - data/cards/1.json`,
+      `${pattern} - data/cards/2.json`
+    ])
+}));
 
 describe("cardsUtils", () => {
   beforeEach(() => {
@@ -107,5 +115,19 @@ describe("cardsUtils", () => {
           type: "some_type"
         }
       }));
+  });
+
+  describe("getAllCards", () => {
+    it("should return info about all cards by pattern", async () => {
+      const cards = await getAllCards();
+      expect(cards).toMatchObject([
+        {
+          type: "data/cards/*/*.json* - data/cards/1.json"
+        },
+        {
+          type: "data/cards/*/*.json* - data/cards/2.json"
+        }
+      ]);
+    });
   });
 });

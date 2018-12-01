@@ -1,4 +1,4 @@
-class AnkiExport {
+declare class AnkiExport {
   public constructor(name: string);
 
   public addCard(front: string, back: string, tags?: string[]);

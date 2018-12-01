@@ -14,7 +14,6 @@
     "lint:prettier": "prettier --list-different --parser typescript ./pages/**.{ts,tsx}",
     "lint:tslint": "tslint --project .",
     "lint": "yarn lint:prettier && yarn lint:tslint",
-    "precommit": "lint-staged",
     "prettier": "prettier --parser typescript --write ./**/*.tsx",
     "start:build": "cross-env NODE_ENV=production next build",
     "start:server": "cross-env NODE_ENV=production ts-node -r tsconfig-paths/register -p ./tsconfig.json",
@@ -92,5 +91,10 @@
     "ts-jest": "^23.10.4",
     "tslint-config-airbnb": "^5.11.0",
     "tslint-config-prettier": "^1.15.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }

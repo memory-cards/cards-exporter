@@ -2,7 +2,9 @@ import "child_process";
 import "fs";
 import * as glob from "glob";
 
+import { ICardDefinition } from "~/typings/ICardDefinition";
 import {
+  filterKnownCards,
   getAllCards,
   getCardData,
   isCardTypeExists,
@@ -129,5 +131,21 @@ describe("cardsUtils", () => {
         }
       ]);
     });
+  });
+
+  describe("filterKnownCards", () => {
+    const cards: any[] = [
+      {
+        type: "some_type"
+      },
+      {
+        type: "data/cards/*/*.json* - data/cards/2.json"
+      }
+    ];
+    expect(filterKnownCards(cards)).toMatchObject([
+      {
+        type: "some_type"
+      }
+    ]);
   });
 });

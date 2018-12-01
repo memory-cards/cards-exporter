@@ -16,7 +16,7 @@
     "lint": "yarn lint:prettier && yarn lint:tslint",
     "prettier": "prettier --parser typescript --write ./**/*.tsx",
     "start:build": "cross-env NODE_ENV=production next build",
-    "start:server": "cross-env NODE_ENV=production ts-node -r tsconfig-paths/register -p ./tsconfig.json --files server.ts",
+    "start:server": "npx cross-env NODE_ENV=production ts-node -r tsconfig-paths/register  --files  server.ts",
     "start": "yarn start:build && yarn start:server",
     "test:jest": "jest",
     "test:watch": "jest --watch",

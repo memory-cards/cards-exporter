@@ -1,6 +1,15 @@
 import "child_process";
 import "fs";
-import { setupCardsStorage, updateCardsStorage } from "./cards";
+import "glob";
+
+import {
+  filterKnownCards,
+  getAllCards,
+  getCardData,
+  isCardTypeExists,
+  setupCardsStorage,
+  updateCardsStorage
+} from "./cards";
 import { getRemoveCommand } from "./env";
 
 let execHistory: string[] = [];
@@ -14,8 +23,28 @@ jest.mock("child_process", () => ({
 }));
 
 jest.mock("fs", () => ({
+  readFile: (fileName: string, cb: (err: any, result: any) => void) =>
+    cb(null, {
+      toString: () => `{ type: "${fileName}" }`
+    }),
   stat: (_: string, cb: (err: any, result: any) => void) =>
     cb(null, mockCardsExists)
+}));
+
+jest.mock(
+  "card-types/types/some_type",
+  () => (obj: any) => ({
+    processed: obj
+  }),
+  { virtual: true }
+);
+
+jest.mock("glob", () => ({
+  Glob: (pattern: string, cb: (_: null, data: string[]) => void) =>
+    cb(null, [
+      `${pattern} - data/cards/1.json`,
+      `${pattern} - data/cards/2.json`
+    ])
 }));
 
 describe("cardsUtils", () => {
@@ -66,5 +95,56 @@ describe("cardsUtils", () => {
         expect.arrayContaining(["cd data/cards\ngit pull", "git log -n 1"])
       );
     });
+  });
+
+  describe("isCardTypeExists", () => {
+    it("returns false for non-existing module", () =>
+      expect(isCardTypeExists("some unknown module")).toEqual(false));
+
+    it("returns true for existing module", () =>
+      expect(isCardTypeExists("some_type")).toEqual(true));
+  });
+
+  describe("getCardData", () => {
+    it("should call processor and return result", () =>
+      expect(
+        getCardData({
+          type: "some_type"
+        })
+      ).toMatchObject({
+        processed: {
+          type: "some_type"
+        }
+      }));
+  });
+
+  describe("getAllCards", () => {
+    it("should return info about all cards by pattern", async () => {
+      const cards = await getAllCards();
+      expect(cards).toMatchObject([
+        {
+          type: "data/cards/*/*.json* - data/cards/1.json"
+        },
+        {
+          type: "data/cards/*/*.json* - data/cards/2.json"
+        }
+      ]);
+    });
+  });
+
+  describe("filterKnownCards", () => {
+    const cards: any[] = [
+      {
+        type: "some_type"
+      },
+      {
+        type: "data/cards/*/*.json* - data/cards/2.json"
+      }
+    ];
+    expect(filterKnownCards(cards)).toMatchObject([
+      {
+        type: "some_type"
+      }
+    ]);
   });
 });

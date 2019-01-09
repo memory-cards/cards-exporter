@@ -4,6 +4,7 @@ import * as glob from "glob";
 import * as json5 from "json5";
 import * as util from "util";
 import { ICardDefinition } from "~/typings/ICardDefinition";
+import { getUniqueId } from "~/utils/getUniqueId";
 import { getRemoveCommand } from "./env";
 
 const globPromised = util.promisify(glob.Glob);
@@ -55,7 +56,7 @@ export const getCardData: (
   tags: string[];
 } = cardConfig => {
   const processor = require(`card-types/types/${cardConfig.type}`);
-  return processor(cardConfig);
+  return processor(cardConfig, getUniqueId());
 };
 
 export const getAllCards = (): Promise<ICardDefinition[]> =>

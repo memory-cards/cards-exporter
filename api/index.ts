@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { Router } from "express";
 import cardsRouter from "./cards";
 import dateController from "./date";

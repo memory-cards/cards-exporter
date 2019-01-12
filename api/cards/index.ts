@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { Router } from "express";
 import getDeck from "./getDeck";
 import listCards from "./listCards";

@@ -44,8 +44,8 @@ describe("getDeckController", () => {
       Promise.reject(new Error("some strange error"))
     );
     await getDeckController(req, res);
-    expect(res.send).toHaveBeenCalled();
-    expect(res.send.mock.calls[0][0]).toMatchObject({
+    expect(sendSpy).toHaveBeenCalled();
+    expect(sendSpy.mock.calls[0][0]).toMatchObject({
       apiName: "cards/getDeck",
       message: "some strange error"
     });
@@ -56,8 +56,8 @@ describe("getDeckController", () => {
       throw new Error("some strange error 2");
     });
     await getDeckController(req, res);
-    expect(res.send).toHaveBeenCalled();
-    expect(res.send.mock.calls[0][0]).toMatchObject({
+    expect(sendSpy).toHaveBeenCalled();
+    expect(sendSpy.mock.calls[0][0]).toMatchObject({
       apiName: "cards/getDeck",
       message: "some strange error 2"
     });

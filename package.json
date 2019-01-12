@@ -80,11 +80,11 @@
     "tsconfig-paths": "^3.6.0",
     "tsconfig-paths-jest": "^0.0.1",
     "tslint": "^5.11.0",
-    "typescript": "3.2.1"
+    "typescript": "3.2.1",
+    "jest": "^23.6.0"
   },
   "devDependencies": {
     "husky": "^1.1.2",
-    "jest": "^23.6.0",
     "lint-staged": "^8.0.0",
     "nodemon": "^1.18.5",
     "prettier": "^1.14.3",

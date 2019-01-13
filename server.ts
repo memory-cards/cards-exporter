@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import * as Sentry from "@sentry/node";
 import express, { Request, Response } from "express";
 import next from "next";

@@ -12,7 +12,13 @@ const app = next({ dev });
 const handle = app.getRequestHandler();
 
 Sentry.init({
-  dsn: "https://320d89774d7344ed9c949a784a6e1c7d@sentry.io/1325279"
+  dsn: "https://320d89774d7344ed9c949a784a6e1c7d@sentry.io/1325279",
+  beforeSend(event: Sentry.SentryEvent) {
+    if (!process.env.HEROKU) {
+      return null;
+    }
+    return event;
+  }
 });
 
 app

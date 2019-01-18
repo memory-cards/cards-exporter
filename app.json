@@ -10,5 +10,11 @@
     {
       "url": "heroku/nodejs"
     }
-  ]
+  ],
+  "evn": {
+    "HEROKU": {
+      "description": "Sign that heroku envrionment is used",
+      "value": "true"
+    }
+  }
 }

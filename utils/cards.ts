@@ -21,7 +21,6 @@ export const setupCardsStorage = async (isForceRenew = false) => {
       "git clone https://github.com/memory-cards/cards data/cards --depth 2"
     );
   }
-  testFunction();
 };
 
 export const updateCardsStorage = () =>
@@ -70,9 +69,3 @@ export const getAllCards = (): Promise<ICardDefinition[]> =>
 
 export const filterKnownCards = (list: ICardDefinition[]): ICardDefinition[] =>
   list.filter(el => isCardTypeExists(el.type));
-
-const testFunction = () => {
-  const a = 15;
-  const b = 25;
-  const c = a + b;
-};

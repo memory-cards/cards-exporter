@@ -1,5 +1,10 @@
 language: node_js
 node_js:
-  - '10'
+  - "10"
+addons:
+  code_climate:
+    repo_token: 816f8d801552b918e8d9ad19921ed255a11bddad6089f7a3ae6c6ac783de0091
 after_script:
+  - npm install -g codeclimate-test-reporter
+  - codeclimate-test-reporter < ./coverage/lcov.info
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js

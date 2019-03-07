@@ -1,9 +1,6 @@
 language: node_js
 node_js:
   - "10"
-addons:
-  code_climate:
-    repo_token: $REPO_TOKEN
 after_script:
   - npm install -g codeclimate-test-reporter
   - codeclimate-test-reporter < ./coverage/lcov.info

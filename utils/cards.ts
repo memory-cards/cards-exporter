@@ -47,9 +47,9 @@ export const isCardTypeExists = (() => {
   };
 })();
 
-export const getCardData: (
-  cardConfig: { type: string }
-) => {
+export const getCardData: (cardConfig: {
+  type: string;
+}) => {
   front: string;
   back: string;
   tags: string[];
@@ -59,7 +59,7 @@ export const getCardData: (
 };
 
 export const getAllCards = (): Promise<ICardDefinition[]> =>
-  globPromised("data/cards/*/*.json*").then((files: string[]) =>
+  globPromised("data/cards/**/*.json*").then((files: string[]) =>
     Promise.all(
       files.map(fileName =>
         readFilePromised(fileName).then(item => json5.parse(item.toString()))

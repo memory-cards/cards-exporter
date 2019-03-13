@@ -8,7 +8,7 @@ const globPromised = util.promisify(glob.Glob);
 const readFilePromised = util.promisify(fs.readFile);
 
 export default (_: Request, response: Response) =>
-  globPromised("data/cards/*/*.json*").then((files: string[]) =>
+  globPromised("data/cards/**/*.json*").then((files: string[]) =>
     Promise.all(
       files.map(fileName =>
         readFilePromised(fileName).then(item => json5.parse(item.toString()))

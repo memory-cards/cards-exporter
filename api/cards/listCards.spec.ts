@@ -29,7 +29,7 @@ describe("listCardsController", () => {
     const sendParam = res.send.mock.calls[0][0];
     expect(sendParam).toMatchObject({
       apiName: "cards/list",
-      cards: [{ "content for": "data/cards/*/*.json*" }]
+      cards: [{ "content for": "data/cards/**/*.json*" }]
     });
   });
 });

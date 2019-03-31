@@ -10,36 +10,40 @@ interface Props {
 }
 
 interface State {
-  selectedTags: string[];
+  selectedTags: any;
+  tags: any;
 }
 
 class Index extends React.Component<Props, State> {
-  public static async getInitialProps() {
-    const response = await axios.get(`http://localhost:8080/api/cards/tags`);
-    return {
-      data: { tags: response.data.tags } || {}
-    };
-  }
-  public state = { selectedTags: [] };
+  public state = {
+    selectedTags: {} as any,
+    tags: {} as any
+  };
 
-  public generateUrl = (ev: React.MouseEvent) => {
+  public async componentDidMount() {
+    const response = await axios.get(`/api/cards/tags`);
+
+    this.setState({ tags: response.data.tags });
+  }
+
+  public updateSelectedTags = (ev: React.MouseEvent) => {
     const target = ev.target as HTMLElement;
+    const tag = target.textContent as string;
     const { selectedTags } = this.state;
-    let tags;
 
     if (target.tagName === "LABEL") {
-      if (!selectedTags.some(tag => target.textContent === tag)) {
-        const tag = target.textContent as string;
-        tags = [...selectedTags, tag];
-      } else {
-        tags = [...selectedTags.filter(tag => target.textContent !== tag)];
-      }
-      this.setState({ selectedTags: tags });
+      this.setState({
+        selectedTags: { ...selectedTags, [tag]: !selectedTags[tag] }
+      });
     }
   };
 
   public getDeck = () => {
-    const tags = this.state.selectedTags.map(tag => `tags=${tag}`);
+    const { selectedTags } = this.state;
+
+    const tags = Object.entries(selectedTags)
+      .filter(item => item[1])
+      .map(item => `tags=${item[0]}`);
     const params = `?${tags.join("&")}`;
     const url = `${window.location.origin}/api/cards/deck${params}`;
 
@@ -47,21 +51,21 @@ class Index extends React.Component<Props, State> {
   };
 
   public render() {
-    const tags = Object.keys(this.props.data.tags).sort(
-      (a: string, b: string) => a.localeCompare(b)
+    const allTags = Object.keys(this.state.tags).sort((a: string, b: string) =>
+      a.localeCompare(b)
     );
 
     return (
       <div>
         Select required tags:
         <ul>
-          {tags.map((tag: string) => (
+          {allTags.map((tag: string) => (
             <li>
-              <label onClick={this.generateUrl}>
+              <label onClick={this.updateSelectedTags}>
                 <input type="checkbox" />
                 {tag}
               </label>
-              - {this.props.data.tags[tag]}
+              - {this.state.tags[tag]}
             </li>
           ))}
         </ul>

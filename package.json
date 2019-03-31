@@ -98,5 +98,6 @@
     "hooks": {
       "pre-commit": "lint-staged"
     }
-  }
+  },
+  "proxy": "http://localhost:8080"
 }

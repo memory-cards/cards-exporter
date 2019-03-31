@@ -23,6 +23,6 @@
     "target": "ES2017",
     "typeRoots": ["node_modules/@types", "typings"]
   },
-  "include": ["./**/*.ts"],
+  "include": ["./**/*.ts", "./**/*.tsx"],
   "exclude": ["node_modules", "coverage", ".next"]
 }

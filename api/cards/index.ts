@@ -1,5 +1,6 @@
 /* istanbul ignore file */
 import { Router } from "express";
+import filterCards from "./filterCards";
 import getDeck from "./getDeck";
 import listCards from "./listCards";
 import updateCards from "./updateCards";
@@ -12,5 +13,6 @@ router.get("/deck", getDeck);
 // to limit user who could initiate a process
 // and avoid DOS
 router.get("/update", updateCards);
+router.get("/filter", filterCards);
 
 export default router;

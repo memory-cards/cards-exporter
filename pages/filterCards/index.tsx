@@ -15,7 +15,7 @@ interface State {
 
 class Index extends React.Component<Props, State> {
   public static async getInitialProps() {
-    const response = await axios.get(`http://localhost:8080/api/cards/filter`);
+    const response = await axios.get(`http://localhost:8080/api/cards/tags`);
     return {
       data: { tags: response.data.tags } || {}
     };

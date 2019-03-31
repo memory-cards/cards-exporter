@@ -5,6 +5,7 @@ import next from "next";
 
 import api from "./api";
 import * as cardsUtils from "./utils/cards";
+import { collectAllTags } from "./utils/tags";
 
 const PORT = process.env.PORT || 8080;
 const dev = process.env.NODE_ENV !== "production";
@@ -44,6 +45,7 @@ app
       }
       /* tslint:disable no-console */
       console.log(`Listen to the http://0.0.0.0:${PORT}`);
+      collectAllTags();
     });
   })
   .catch((ex: any) => {

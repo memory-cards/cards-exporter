@@ -25,6 +25,7 @@ Sentry.init({
 app
   .prepare()
   .then(() => cardsUtils.setupCardsStorage())
+  .then(() => collectAllTags())
   .then(() => {
     const server = express();
     server.use(Sentry.Handlers.requestHandler() as express.RequestHandler);
@@ -45,7 +46,6 @@ app
       }
       /* tslint:disable no-console */
       console.log(`Listen to the http://0.0.0.0:${PORT}`);
-      collectAllTags();
     });
   })
   .catch((ex: any) => {

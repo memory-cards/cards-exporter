@@ -1,20 +1,22 @@
 import { filterKnownCards, getAllCards } from "~/utils/cards";
+import { RepoTags } from "../typings/common";
 
-export const knownTags: any = {};
+export const repoTags: RepoTags = {};
 
 export const collectAllTags = () =>
   getAllCards()
     .then(cards => filterKnownCards(cards))
-    .then(cards => {
-      cards.forEach(card => {
+    .then(cards =>
+      cards.reduce((currentTags: RepoTags, card) => {
         card.tags.forEach(tag => {
-          if (!knownTags[tag]) {
-            knownTags[tag] = 1;
+          if (currentTags[tag]) {
+            currentTags[tag] += 1;
           } else {
-            knownTags[tag] += 1;
+            currentTags[tag] = 1;
           }
         });
-      });
-    })
+        return currentTags;
+      }, repoTags)
+    )
     /* tslint:disable no-console */
-    .catch((e: Error) => console.log(e));
+    .catch((e: Error) => console.error(e));

@@ -2,38 +2,53 @@ import axios from "axios";
 // tslint:disable no-submodule-imports
 import { withRouter } from "next/router";
 import * as React from "react";
+import { RepoTags } from "../../typings/common";
+
+interface SelectedTags {
+  [tagName: string]: boolean;
+}
 
 interface Props {
   data: {
-    tags: any;
+    tags: RepoTags;
   };
 }
 
 interface State {
-  selectedTags: any;
-  tags: any;
+  readonly selectedTags: SelectedTags;
+  tags: RepoTags;
 }
 
 class Index extends React.Component<Props, State> {
   public state = {
-    selectedTags: {} as any,
-    tags: {} as any
+    selectedTags: ({} as any) as SelectedTags,
+    tags: ({} as any) as RepoTags
   };
 
   public async componentDidMount() {
-    const response = await axios.get(`/api/cards/tags`);
-
-    this.setState({ tags: response.data.tags });
+    try {
+      const response = await axios.get(`/api/cards/tags`);
+      this.setState({ tags: response.data.tags });
+    } catch (e) {
+      // what to place here ?
+    }
   }
 
   public updateSelectedTags = (ev: React.MouseEvent) => {
     const target = ev.target as HTMLElement;
     const tag = target.textContent as string;
-    const { selectedTags } = this.state;
 
     if (target.tagName === "LABEL") {
-      this.setState({
-        selectedTags: { ...selectedTags, [tag]: !selectedTags[tag] }
+      this.setState(({ selectedTags }) => {
+        let newTags;
+        if (selectedTags[tag]) {
+          newTags = { ...selectedTags };
+          delete newTags[tag];
+        } else {
+          newTags = { ...selectedTags, [tag]: true };
+        }
+
+        return { selectedTags: newTags };
       });
     }
   };
@@ -41,11 +56,9 @@ class Index extends React.Component<Props, State> {
   public getDeck = () => {
     const { selectedTags } = this.state;
 
-    const tags = Object.entries(selectedTags)
-      .filter(item => item[1])
-      .map(item => `tags=${item[0]}`);
+    const tags = Object.keys(selectedTags).map(tag => `tags=${tag}`);
     const params = `?${tags.join("&")}`;
-    const url = `${window.location.origin}/api/cards/deck${params}`;
+    const url = `/api/cards/deck${params}`;
 
     window.open(url);
   };

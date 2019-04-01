@@ -1,5 +1,9 @@
 import { Request, Response } from "express";
-import { filterKnownCards, getAllCards } from "~/utils/cards";
+import {
+  filterCardsByTags,
+  filterKnownCards,
+  getAllCards
+} from "~/utils/cards";
 import { generateDeck } from "~/utils/decks";
 
 export default (request: Request, response: Response) => {
@@ -12,15 +16,7 @@ export default (request: Request, response: Response) => {
 
   return getAllCards()
     .then(cards => filterKnownCards(cards))
-    .then(knownCards =>
-      requestedTags.length
-        ? knownCards.filter(card =>
-            card.tags.some(tag =>
-              requestedTags.some((userTag: string) => userTag === tag)
-            )
-          )
-        : knownCards
-    )
+    .then(knownCards => filterCardsByTags(knownCards, requestedTags))
     .then(filteredCards => generateDeck(filteredCards))
     .then((deck: { deckName: string; fileName: string }) =>
       response.sendFile(deck.fileName, {

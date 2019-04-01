@@ -7,6 +7,7 @@ describe("getDeckController", () => {
   let req: httpMocks.MockRequest<any>;
   let res: httpMocks.MockResponse<any>;
   let mockFilterKnownCards: jest.SpyInstance<any>;
+  let mockFilterCardsByTags: jest.SpyInstance<any>;
   let mockGetAllCards: jest.SpyInstance<any>;
   let generateDeckSpy: jest.SpyInstance<any>;
   let sendFileSpy: jest.SpyInstance<any>;
@@ -18,6 +19,7 @@ describe("getDeckController", () => {
     sendFileSpy = res.sendFile = jest.fn();
     sendSpy = jest.spyOn(res, "send");
     mockFilterKnownCards = jest.spyOn(cards, "filterKnownCards");
+    mockFilterCardsByTags = jest.spyOn(cards, "filterCardsByTags");
     mockGetAllCards = jest.spyOn(cards, "getAllCards");
     generateDeckSpy = jest.spyOn(decks, "generateDeck");
   });
@@ -29,14 +31,53 @@ describe("getDeckController", () => {
   it("calls pipe of functions and send file with result", async () => {
     const getAllCardsMock: any[] = [];
     const filterKnownCardsMock: any[] = [];
+    const filterCardsByTagsMock: any[] = [];
     mockGetAllCards.mockReturnValue(Promise.resolve(getAllCardsMock));
     mockFilterKnownCards.mockReturnValue(Promise.resolve(filterKnownCardsMock));
+    mockFilterCardsByTags.mockReturnValue(
+      Promise.resolve(filterCardsByTagsMock)
+    );
 
     await getDeckController(req, res);
     expect(mockGetAllCards).toHaveBeenCalled();
     expect(mockFilterKnownCards).toHaveBeenCalledWith(getAllCardsMock);
-    expect(generateDeckSpy).toHaveBeenCalledWith(filterKnownCardsMock);
+    expect(mockFilterCardsByTags).toHaveBeenCalledWith(
+      filterKnownCardsMock,
+      []
+    );
+    expect(generateDeckSpy).toHaveBeenCalledWith(filterCardsByTagsMock);
     expect(sendFileSpy).toHaveBeenCalled();
+  });
+
+  describe('passes correct arguments to "filterCardsByTags"', () => {
+    const runRequestTest = (
+      testMessage: string,
+      tags: string[] | string | void,
+      expectedTags: string[]
+    ) => {
+      it(testMessage, async () => {
+        const filterCardsMock: any[] = [];
+
+        req = httpMocks.createRequest({ query: { tags } });
+        mockFilterKnownCards.mockReturnValue(Promise.resolve(filterCardsMock));
+
+        await getDeckController(req, res);
+
+        expect(mockFilterCardsByTags).toHaveBeenCalledWith(
+          filterCardsMock,
+          expectedTags
+        );
+      });
+    };
+
+    const arrayTags = [Math.random().toString()];
+    const stringTags = Math.random().toString();
+
+    runRequestTest('when "requestedTags" is empty', undefined, []);
+    runRequestTest('when "requestedTags" is Array', arrayTags, arrayTags);
+    runRequestTest('when "requestedTags" is not Array', stringTags, [
+      stringTags
+    ]);
   });
 
   it("sends error response of any fail 1", async () => {

@@ -69,3 +69,10 @@ export const getAllCards = (): Promise<ICardDefinition[]> =>
 
 export const filterKnownCards = (list: ICardDefinition[]): ICardDefinition[] =>
   list.filter(el => isCardTypeExists(el.type));
+
+export const filterCardsByTags = (cards: ICardDefinition[], tags: string[]) =>
+  tags.length
+    ? cards.filter(card =>
+        card.tags.some(tag => tags.some(userTag => userTag === tag))
+      )
+    : cards;

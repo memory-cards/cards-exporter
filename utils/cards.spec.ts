@@ -1,8 +1,10 @@
 import "child_process";
 import "fs";
 import "glob";
+import { ICardDefinition } from "~/typings/ICardDefinition";
 
 import {
+  filterCardsByTags,
   filterKnownCards,
   getAllCards,
   getCardData,
@@ -146,5 +148,40 @@ describe("cardsUtils", () => {
         type: "some_type"
       }
     ]);
+  });
+
+  describe("filterCardsByTags", () => {
+    let cards: ICardDefinition[] = [];
+    let userTags: string[] = [];
+
+    beforeEach(() => {
+      const value = () => Math.random().toString();
+      const getCardWithTags = (newTags: string[]) => ({
+        card: { question: "q" },
+        lang: "l",
+        tags: newTags,
+        type: "t"
+      });
+
+      userTags = [value(), value()];
+
+      cards = [
+        getCardWithTags([userTags[0], userTags[1]]),
+        getCardWithTags([userTags[1]]),
+        getCardWithTags([userTags[0], value()]),
+        getCardWithTags([value(), value()]),
+        getCardWithTags([])
+      ];
+    });
+
+    it("returns not filtered array of cards if no 'tags'", () => {
+      expect(filterCardsByTags(cards, [])).toMatchObject(cards);
+    });
+
+    it("returns filtered array of cards if has tags", () => {
+      expect(filterCardsByTags(cards, userTags)).toMatchObject(
+        cards.slice(0, 3)
+      );
+    });
   });
 });

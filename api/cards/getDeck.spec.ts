@@ -27,6 +27,7 @@ describe("getDeckController", () => {
     generateDeckSpy.mockRestore();
     mockGetAllCards.mockRestore();
     mockFilterKnownCards.mockRestore();
+    mockFilterCardsByTags.mockRestore();
   });
   it("calls pipe of functions and send file with result", async () => {
     const getAllCardsMock: any[] = [];

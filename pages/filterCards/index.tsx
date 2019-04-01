@@ -1,17 +1,9 @@
 import axios from "axios";
-// tslint:disable no-submodule-imports
-import { withRouter } from "next/router";
 import * as React from "react";
-import { RepoTags } from "../../typings/common";
+import { RepoTags } from "~/typings/common";
 
 interface SelectedTags {
   [tagName: string]: boolean;
-}
-
-interface Props {
-  data: {
-    tags: RepoTags;
-  };
 }
 
 interface State {
@@ -19,7 +11,7 @@ interface State {
   tags: RepoTags;
 }
 
-class Index extends React.Component<Props, State> {
+class Index extends React.Component<State> {
   public state = {
     selectedTags: ({} as any) as SelectedTags,
     tags: ({} as any) as RepoTags
@@ -39,7 +31,7 @@ class Index extends React.Component<Props, State> {
     const tag = target.textContent as string;
 
     if (target.tagName === "LABEL") {
-      this.setState(({ selectedTags }) => {
+      this.setState(({ selectedTags }: State) => {
         let newTags;
         if (selectedTags[tag]) {
           newTags = { ...selectedTags };
@@ -70,10 +62,10 @@ class Index extends React.Component<Props, State> {
 
     return (
       <div>
-        Select required tags:
+        <h2>Select required tags:</h2>
         <ul>
           {allTags.map((tag: string) => (
-            <li>
+            <li key={tag}>
               <label onClick={this.updateSelectedTags}>
                 <input type="checkbox" />
                 {tag}
@@ -88,4 +80,4 @@ class Index extends React.Component<Props, State> {
   }
 }
 
-export default withRouter(Index);
+export default Index;

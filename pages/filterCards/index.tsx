@@ -12,7 +12,7 @@ interface State {
   isError?: boolean;
 }
 
-class Index extends React.Component<State> {
+class FilterCardsPage extends React.Component<State> {
   public state = {
     isError: false,
     selectedTags: ({} as any) as SelectedTags,
@@ -96,4 +96,4 @@ class Index extends React.Component<State> {
   }
 }
 
-export default Index;
+export default FilterCardsPage;

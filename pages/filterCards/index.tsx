@@ -9,10 +9,12 @@ interface SelectedTags {
 interface State {
   readonly selectedTags: SelectedTags;
   tags: RepoTags;
+  isError?: boolean;
 }
 
 class Index extends React.Component<State> {
   public state = {
+    isError: false,
     selectedTags: ({} as any) as SelectedTags,
     tags: ({} as any) as RepoTags
   };
@@ -22,17 +24,18 @@ class Index extends React.Component<State> {
       const response = await axios.get(`/api/cards/tags`);
       this.setState({ tags: response.data.tags });
     } catch (e) {
-      // what to place here ?
+      this.setState({ isError: true });
     }
   }
 
-  public updateSelectedTags = (ev: React.MouseEvent) => {
-    const target = ev.target as HTMLElement;
-    const tag = target.textContent as string;
+  public updateSelectedTags = (event: React.MouseEvent) => {
+    const target = event.target as HTMLInputElement;
 
-    if (target.tagName === "LABEL") {
+    if (target.tagName === "INPUT") {
       this.setState(({ selectedTags }: State) => {
         let newTags;
+        const tag = target.value;
+
         if (selectedTags[tag]) {
           newTags = { ...selectedTags };
           delete newTags[tag];
@@ -43,6 +46,10 @@ class Index extends React.Component<State> {
         return { selectedTags: newTags };
       });
     }
+  };
+
+  public clearSelectedTags = () => {
+    this.setState({ selectedTags: {} });
   };
 
   public getDeck = () => {
@@ -56,7 +63,12 @@ class Index extends React.Component<State> {
   };
 
   public render() {
-    const allTags = Object.keys(this.state.tags).sort((a: string, b: string) =>
+    if (this.state.isError) {
+      return <div>Sorry, backend data has not been recieved yet :(</div>;
+    }
+
+    const { tags, selectedTags } = this.state;
+    const tagsArray = Object.keys(tags).sort((a: string, b: string) =>
       a.localeCompare(b)
     );
 
@@ -64,16 +76,20 @@ class Index extends React.Component<State> {
       <div>
         <h2>Select required tags:</h2>
         <ul>
-          {allTags.map((tag: string) => (
-            <li key={tag}>
-              <label onClick={this.updateSelectedTags}>
-                <input type="checkbox" />
-                {tag}
-              </label>
-              - {this.state.tags[tag]}
+          {tagsArray.map((tagName: string) => (
+            <li key={tagName} onClick={this.updateSelectedTags}>
+              <input
+                type="checkbox"
+                id={tagName}
+                value={tagName}
+                checked={selectedTags[tagName]}
+              />
+              <label htmlFor={tagName}>{tagName}</label>
+              {` - ${tags[tagName]}`}
             </li>
           ))}
         </ul>
+        <button onClick={this.clearSelectedTags}>Clear all</button>
         <button onClick={this.getDeck}>Get deck</button>
       </div>
     );

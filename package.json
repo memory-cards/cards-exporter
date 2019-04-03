@@ -10,7 +10,7 @@
   "scripts": {
     "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
     "dev": "nodemon -e ts,tsx,js --exec \"yarn start\"",
-    "heroku-postbuild": "yarn run start:build",
+    "heroku-postbuild": "yarn run postinstall && yarn run start:build",
     "lint:prettier": "prettier --list-different --parser typescript ./pages/**.{ts,tsx}",
     "lint:tslint": "tslint --project .",
     "lint": "yarn lint:prettier && yarn lint:tslint",

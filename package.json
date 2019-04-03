@@ -9,7 +9,7 @@
   },
   "scripts": {
     "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
-    "dev": "nodemon -e ts,js --exec \"yarn start\"",
+    "dev": "nodemon -e ts,tsx,js --exec \"yarn start\"",
     "heroku-postbuild": "yarn run start:build",
     "lint:prettier": "prettier --list-different --parser typescript ./pages/**.{ts,tsx}",
     "lint:tslint": "tslint --project .",
@@ -62,6 +62,7 @@
     "@types/tmp": "^0.0.33",
     "@zeit/next-typescript": "^1.1.1",
     "anki-apkg-export": "^4.0.2",
+    "axios": "^0.18.0",
     "card-types": "https://github.com/memory-cards/card-types.git",
     "coveralls": "^3.0.2",
     "cross-env": "^5.2.0",
@@ -85,6 +86,7 @@
     "typescript": "3.2.1"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "husky": "^1.1.2",
     "lint-staged": "^8.0.0",
     "nodemon": "^1.18.5",

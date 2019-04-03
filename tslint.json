@@ -9,6 +9,7 @@
   },
   "rules": {
     "import-name": false,
+    "interface-name": [true, "never-prefix"],
     "no-submodule-imports": [true, "~"],
     "no-implicit-dependencies": [true, ["~", "cards-exporter"]]
   }

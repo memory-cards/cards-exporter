@@ -18,7 +18,7 @@
     "postinstall": "cp node_modules/sql.js/js/sql-memory-growth.js node_modules/sql.js/js/sql.js",
     "start:build": "cross-env NODE_ENV=production next build",
     "start:server": "npx cross-env NODE_ENV=production ts-node -r tsconfig-paths/register  --files  server.ts",
-    "start": "yarn start:build && yarn start:server",
+    "start": "node scripts/start.js",
     "test:jest": "jest",
     "test:watch": "jest --watch",
     "test": "yarn lint && yarn coveralls"

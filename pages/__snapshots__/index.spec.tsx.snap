@@ -13,35 +13,49 @@ exports[`With Snapshot Testing IndexPage shows "Cards Exporter" 1`] = `
       <a
         href="/api/date"
       >
-        Date
+        Date info
       </a>
     </li>
     <li>
       <a
         href="/api/cards/list"
       >
-        Cards list
+        Cards info
       </a>
     </li>
     <li>
       <a
         href="/api/cards/deck"
       >
-        Get deck
+        Deck info
       </a>
     </li>
     <li>
       <a
         href="/api/cards/update"
       >
-        Update
+        Last update info
       </a>
     </li>
     <li>
       <a
         href="/api/cards/tags"
       >
-        Tags
+        Tags info
+      </a>
+    </li>
+    <li>
+      <a
+        href="/filterCards"
+      >
+        Filter cards page
+      </a>
+    </li>
+    <li>
+      <a
+        href="/updateCards"
+      >
+        Update cards page
       </a>
     </li>
   </ul>

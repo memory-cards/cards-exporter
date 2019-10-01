@@ -17,24 +17,32 @@ describe("With Enzyme", () => {
     });
 
     describe("has menu with link to", () => {
-      it("date page", () => {
+      it("date info", () => {
         expect(page.find('a[href="/api/date"]').exists()).toBe(true);
       });
 
-      it("cards list page", () => {
+      it("cards list info", () => {
         expect(page.find('a[href="/api/cards/list"]').exists()).toBe(true);
       });
 
-      it("deck page", () => {
+      it("deck info", () => {
         expect(page.find('a[href="/api/cards/deck"]').exists()).toBe(true);
       });
 
-      it("update card page", () => {
+      it("update card info", () => {
         expect(page.find('a[href="/api/cards/update"]').exists()).toBe(true);
       });
 
-      it("tags page", () => {
+      it("tags info", () => {
         expect(page.find('a[href="/api/cards/tags"]').exists()).toBe(true);
+      });
+
+      it("filter cards page", () => {
+        expect(page.find('a[href="/filterCards"]').exists()).toBe(true);
+      });
+
+      it("update cards page", () => {
+        expect(page.find('a[href="/updateCards"]').exists()).toBe(true);
       });
     });
   });

@@ -8,42 +8,48 @@ interface Props {
   card: ICardDefinition;
 }
 
-class CardPreview extends Component<Props> {
+interface State {
+  isBackVisible: boolean;
+}
+
+class CardPreview extends Component<Props, State> {
   public state = {
+    isBackVisible: false,
     processedCard: processor(this.props.card)
   };
 
   public componentDidMount() {
     setTimeout(() => {
-      const { processedCard } = this.state;
-
-      console.log(processedCard.front);
-      const script = /<script\b[^>]*>([\s\S]*?)<\/script>/gim.exec(
-        processedCard.front
-      );
-
-      if (script) {
-        const frame = document.querySelector("#frame") as HTMLIFrameElement;
-        const scriptElement = document.createElement("script");
-        console.log(scriptElement);
-        scriptElement.type = "text/javascript";
-        scriptElement.text = script[1].trim();
-
-        console.dir(frame.contentWindow);
-        const body = frame.contentWindow!.document.querySelector("body");
-        console.log(body);
-        body!.appendChild(scriptElement);
-      }
-    }, 1000);
+      this.runScript(this.state.processedCard.front);
+    }, 500);
   }
 
-  public render() {
-    const { processedCard } = this.state;
+  public showBack = () => {
+    this.setState(() => ({ isBackVisible: true }));
+    this.runScript(this.state.processedCard.back);
+  };
 
-    const htmlString = ` <div><div>Front:</div>${
-      processedCard.front
-    }</div><div>Back:</div>${processedCard.back}
-    `;
+  public runScript = (htmlWithScript: string) => {
+    const scriptRegexp = /<script\b[^>]*>([\s\S]*?)<\/script>/gim;
+    const scriptMatch = scriptRegexp.exec(htmlWithScript);
+
+    if (scriptMatch) {
+      const frame = document.querySelector("#frame") as HTMLIFrameElement;
+      const body = frame.contentWindow!.document.querySelector("body");
+      const scriptElement = document.createElement("script");
+      const script = scriptMatch[1].trim();
+      console.log(scriptElement);
+      console.dir(frame.contentWindow);
+      scriptElement.type = "text/javascript";
+      scriptElement.text = script;
+      console.log(body);
+
+      body!.appendChild(scriptElement);
+    }
+  };
+
+  public render() {
+    const { processedCard, isBackVisible } = this.state;
 
     return (
       <div>
@@ -51,12 +57,13 @@ class CardPreview extends Component<Props> {
           id="frame"
           style={{ width: "500px", height: "calc(100vh - 50px)" }}
         >
-          <div dangerouslySetInnerHTML={{ __html: htmlString }} />
+          <div dangerouslySetInnerHTML={{ __html: processedCard.front }} />
+          {isBackVisible ? (
+            <div dangerouslySetInnerHTML={{ __html: processedCard.back }} />
+          ) : (
+            <button onClick={this.showBack}>Show back</button>
+          )}
         </Frame>
-        {/* <div
-            className="question"
-            dangerouslySetInnerHTML={{ __html: (() => card.card.question)() }}
-          /> */}
       </div>
     );
   }

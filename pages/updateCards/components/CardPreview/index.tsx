@@ -5,7 +5,7 @@ import React, { Component } from "react";
 import { ICardDefinition } from "~/typings/ICardDefinition";
 
 interface Props {
-  card: ICardDefinition;
+  card: ICardDefinition | null;
 }
 
 interface State {
@@ -50,6 +50,10 @@ class CardPreview extends Component<Props, State> {
 
   public render() {
     const { processedCard, isBackVisible } = this.state;
+
+    if (!this.props.card) {
+      return null;
+    }
 
     return (
       <div>

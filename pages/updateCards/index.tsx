@@ -9,11 +9,13 @@ import "./styles.scss";
 
 interface State {
   cards: ICardDefinition[];
+  selectedCard: ICardDefinition;
 }
 
 class UpdateCardPage extends Component<State> {
   public state = {
-    cards: []
+    cards: [],
+    selectedCard: null
   };
 
   public async componentDidMount() {
@@ -26,7 +28,7 @@ class UpdateCardPage extends Component<State> {
   }
 
   public render() {
-    const { cards } = this.state;
+    const { cards, selectedCard } = this.state;
 
     console.log(this.state);
     return (
@@ -39,7 +41,7 @@ class UpdateCardPage extends Component<State> {
           <div className="section">Edit</div>
           {cards.length && (
             <div className="section">
-              <CardPreview card={cards[400]} />
+              <CardPreview card={selectedCard} />
             </div>
           )}
         </div>

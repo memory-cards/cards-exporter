@@ -11,6 +11,7 @@
     "import-name": false,
     "interface-name": [true, "never-prefix"],
     "no-submodule-imports": [true, "~"],
-    "no-implicit-dependencies": [true, ["~", "cards-exporter"]]
+    "no-implicit-dependencies": [true, ["~", "cards-exporter"]],
+    "variable-name": [true, "ban-keywords", "check-format", "allow-pascal-case"]
   }
 }

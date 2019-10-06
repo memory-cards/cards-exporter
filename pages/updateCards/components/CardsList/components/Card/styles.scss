@@ -3,4 +3,8 @@
   margin: 0 0 5px;
   padding: 5px;
   height: 40px;
+
+  &:hover {
+    cursor: pointer;
+  }
 }

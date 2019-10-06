@@ -10,19 +10,28 @@ interface Props {
 
 interface State {
   isBackVisible: boolean;
+  processedCard: any;
 }
 
 class CardPreview extends Component<Props, State> {
   public state = {
     isBackVisible: false,
-    processedCard: processor(this.props.card)
+    processedCard: !!this.props.card && processor(this.props.card)
   };
 
-  public componentDidMount() {
-    setTimeout(() => {
-      this.runScript(this.state.processedCard.front);
-    }, 500);
-  }
+  public componentDidUpdate = (props: Props) => {
+    console.log("componentDidUpdate this.props", this.props);
+    console.log("componentDidUpdate props", props);
+    if (this.props.card !== props.card) {
+      this.setState(() => {
+        const processedCard = processor(this.props.card);
+        setTimeout(() => {
+          this.runScript(processedCard.front);
+        }, 500);
+        return { processedCard, isBackVisible: false };
+      });
+    }
+  };
 
   public showBack = () => {
     this.setState(() => ({ isBackVisible: true }));
@@ -50,6 +59,7 @@ class CardPreview extends Component<Props, State> {
 
   public render() {
     const { processedCard, isBackVisible } = this.state;
+    console.log("previewProps", this.props);
 
     if (!this.props.card) {
       return null;

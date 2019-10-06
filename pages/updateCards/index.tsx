@@ -27,19 +27,23 @@ class UpdateCardPage extends Component<State> {
     }
   }
 
+  public selectCard = (selectedCard: ICardDefinition) => {
+    this.setState(() => ({ selectedCard }));
+  };
+
   public render() {
     const { cards, selectedCard } = this.state;
 
-    console.log(this.state);
+    console.log("selectedCard", this.state);
     return (
       <div className="container">
         <h2 className="title">Update cards page:</h2>
         <div className="section-container">
           <div className="cards-list">
-            <CardsList cards={cards} />
+            <CardsList cards={cards} selectCard={this.selectCard} />
           </div>
           <div className="section">Edit</div>
-          {cards.length && (
+          {!!cards.length && (
             <div className="section">
               <CardPreview card={selectedCard} />
             </div>

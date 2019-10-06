@@ -5,10 +5,19 @@ import "./styles.scss";
 
 interface Props {
   card: ICardDefinition;
+  selectCard: (selectedCard: ICardDefinition) => void;
 }
 
-const Card = ({ card }: Props) => {
-  return <li className="card">{card.tags.join(", ")}</li>;
+const Card = ({ card, selectCard }: Props) => {
+  const onClick = () => {
+    selectCard(card);
+  };
+
+  return (
+    <li className="card" onClick={onClick}>
+      {card.tags.join(", ")}
+    </li>
+  );
 };
 
 export default Card;

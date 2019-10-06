@@ -5,13 +5,14 @@ import Card from "./components/Card";
 
 interface Props {
   cards: ICardDefinition[];
+  selectCard: (selectedCard: ICardDefinition) => void;
 }
 
-const CardsList = ({ cards }: Props) => {
+const CardsList = ({ cards, selectCard }: Props) => {
   return (
     <ul>
       {cards.map(card => (
-        <Card card={card} />
+        <Card card={card} selectCard={selectCard} />
       ))}
     </ul>
   );

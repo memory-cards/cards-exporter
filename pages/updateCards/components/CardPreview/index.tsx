@@ -1,7 +1,6 @@
 /* tslint:disable no-var-requires no-submodule-imports */
-import Frame from "react-frame-component";
-const processor = require("card-types/types/choose_sequence");
 import React, { Component } from "react";
+import Frame from "react-frame-component";
 import { ICardDefinition } from "~/typings/ICardDefinition";
 
 interface Props {
@@ -13,21 +12,44 @@ interface State {
   processedCard: any;
 }
 
+const INTERVAL = 200;
+
+const processor = (card: ICardDefinition | null) => {
+  if (card) {
+    switch (card.type) {
+      case "choose_sequence":
+        return require(`card-types/types/choose_sequence`)(card);
+      case "choose_options":
+        return require(`card-types/types/choose_options`)(card);
+      case "order_items":
+        return require(`card-types/types/order_items`)(card);
+      case "info":
+        return require(`card-types/types/info`)(card);
+    }
+  }
+};
+
 class CardPreview extends Component<Props, State> {
   public state = {
     isBackVisible: false,
     processedCard: !!this.props.card && processor(this.props.card)
   };
 
+  public timer: NodeJS.Timeout | null = null;
+
   public componentDidUpdate = (props: Props) => {
     console.log("componentDidUpdate this.props", this.props);
     console.log("componentDidUpdate props", props);
     if (this.props.card !== props.card) {
+      if (this.timer) {
+        clearTimeout(this.timer);
+        this.timer = null;
+      }
       this.setState(() => {
         const processedCard = processor(this.props.card);
-        setTimeout(() => {
+        this.timer = setTimeout(() => {
           this.runScript(processedCard.front);
-        }, 500);
+        }, INTERVAL);
         return { processedCard, isBackVisible: false };
       });
     }

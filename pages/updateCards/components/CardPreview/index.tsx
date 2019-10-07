@@ -88,6 +88,7 @@ class CardPreview extends Component<Props, State> {
       scriptElement.text = script;
 
       body!.appendChild(scriptElement);
+      body!.removeChild(scriptElement);
     }
   };
 

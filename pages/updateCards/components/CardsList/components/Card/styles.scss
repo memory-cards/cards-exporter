@@ -1,8 +1,10 @@
 .card {
   background-color: #ffffff;
-  margin: 0 0 5px;
+  margin: 0 5px 5px;
   padding: 5px;
   min-height: 40px;
+  border-radius: 6px;
+  box-shadow: 2px 2px 0 darkslategray;
 
   &:last-child {
     margin-bottom: 0;
@@ -10,11 +12,12 @@
 
   &:hover {
     cursor: pointer;
+    background-color: #eeeded;
   }
 
   .tag {
     display: inline-block;
-    background-color: #b4abab;
+    background-color: lightgray;
     margin: 4px;
     border-radius: 6px;
     padding: 0px 5px;

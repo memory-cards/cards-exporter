@@ -21,7 +21,7 @@ const Card = ({ card, selectCard }: Props) => {
       .slice(0, 10)
       .map(word => (word.length < 30 ? word : word.substr(0, 30)))
       .join(" ");
-    return `${text}...`;
+    return text.length < element.innerText.length ? `${text}...` : text;
   };
 
   return (

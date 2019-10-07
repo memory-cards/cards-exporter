@@ -20,10 +20,10 @@ class UpdateCardPage extends Component<State> {
 
   public async componentDidMount() {
     try {
-      const response = await axios.get(`/api/cards/list`);
-      this.setState({ cards: response.data.cards });
+      const { data } = await axios.get(`/api/cards/list`);
+      this.setState({ cards: data.cards });
     } catch (e) {
-      this.setState({ isError: true });
+      //
     }
   }
 

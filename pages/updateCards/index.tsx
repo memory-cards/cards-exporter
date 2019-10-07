@@ -34,6 +34,7 @@ class UpdateCardPage extends Component<State> {
   public render() {
     const { cards, selectedCard } = this.state;
 
+    /* tslint:disable no-console */
     console.log("selectedCard", this.state);
     return (
       <div className="container">

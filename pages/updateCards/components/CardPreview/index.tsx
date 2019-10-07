@@ -3,18 +3,9 @@ import React, { Component } from "react";
 import Frame from "react-frame-component";
 import { ICardDefinition } from "~/typings/ICardDefinition";
 
-interface Props {
-  card: ICardDefinition | null;
-}
+import "./styles.scss";
 
-interface State {
-  isBackVisible: boolean;
-  processedCard: any;
-}
-
-const INTERVAL = 200;
-
-const processor = (card: ICardDefinition | null) => {
+const cardProcessor = (card: ICardDefinition | null) => {
   if (card) {
     switch (card.type) {
       case "choose_sequence":
@@ -29,27 +20,41 @@ const processor = (card: ICardDefinition | null) => {
   }
 };
 
+const INTERVAL = 100;
+
+interface Props {
+  card: ICardDefinition | null;
+}
+
+interface State {
+  isBackVisible: boolean;
+  processedCard: {
+    front: string;
+    back: string;
+  };
+}
+
 class CardPreview extends Component<Props, State> {
   public state = {
     isBackVisible: false,
-    processedCard: !!this.props.card && processor(this.props.card)
+    processedCard: !!this.props.card && cardProcessor(this.props.card)
   };
 
   public timer: NodeJS.Timeout | null = null;
 
   public componentDidUpdate = (props: Props) => {
-    console.log("componentDidUpdate this.props", this.props);
-    console.log("componentDidUpdate props", props);
     if (this.props.card !== props.card) {
       if (this.timer) {
         clearTimeout(this.timer);
         this.timer = null;
       }
       this.setState(() => {
-        const processedCard = processor(this.props.card);
-        this.timer = setTimeout(() => {
-          this.runScript(processedCard.front);
-        }, INTERVAL);
+        const processedCard = cardProcessor(this.props.card);
+        // add setTimeout because script does not work properly
+        this.timer = setTimeout(
+          () => this.runCardScript(processedCard.front),
+          INTERVAL
+        );
         return { processedCard, isBackVisible: false };
       });
     }
@@ -57,10 +62,10 @@ class CardPreview extends Component<Props, State> {
 
   public showBack = () => {
     this.setState(() => ({ isBackVisible: true }));
-    this.runScript(this.state.processedCard.back);
+    this.runCardScript(this.state.processedCard.back);
   };
 
-  public runScript = (htmlWithScript: string) => {
+  public runCardScript = (htmlWithScript: string) => {
     const scriptRegexp = /<script\b[^>]*>([\s\S]*?)<\/script>/gim;
     const scriptMatch = scriptRegexp.exec(htmlWithScript);
 
@@ -69,11 +74,10 @@ class CardPreview extends Component<Props, State> {
       const body = frame.contentWindow!.document.querySelector("body");
       const scriptElement = document.createElement("script");
       const script = scriptMatch[1].trim();
-      console.log(scriptElement);
-      console.dir(frame.contentWindow);
+      // console.log(scriptElement);
+      // console.dir(frame.contentWindow);
       scriptElement.type = "text/javascript";
       scriptElement.text = script;
-      console.log(body);
 
       body!.appendChild(scriptElement);
     }
@@ -81,7 +85,6 @@ class CardPreview extends Component<Props, State> {
 
   public render() {
     const { processedCard, isBackVisible } = this.state;
-    console.log("previewProps", this.props);
 
     if (!this.props.card) {
       return null;
@@ -89,10 +92,7 @@ class CardPreview extends Component<Props, State> {
 
     return (
       <div>
-        <Frame
-          id="frame"
-          style={{ width: "500px", height: "calc(100vh - 50px)" }}
-        >
+        <Frame id="frame">
           <div dangerouslySetInnerHTML={{ __html: processedCard.front }} />
           {isBackVisible ? (
             <div dangerouslySetInnerHTML={{ __html: processedCard.back }} />

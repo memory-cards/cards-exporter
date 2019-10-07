@@ -2,9 +2,21 @@
   background-color: #ffffff;
   margin: 0 0 5px;
   padding: 5px;
-  height: 40px;
+  min-height: 40px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 
   &:hover {
     cursor: pointer;
+  }
+
+  .tag {
+    display: inline-block;
+    background-color: #b4abab;
+    margin: 4px;
+    border-radius: 6px;
+    padding: 0px 5px;
   }
 }

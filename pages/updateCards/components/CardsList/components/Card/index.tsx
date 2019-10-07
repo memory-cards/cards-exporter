@@ -13,9 +13,26 @@ const Card = ({ card, selectCard }: Props) => {
     selectCard(card);
   };
 
+  const getShortCardQuestion = () => {
+    const element = document.createElement("div");
+    element.innerHTML = card.card.question;
+    const text = element.innerText
+      .split(" ")
+      .slice(0, 10)
+      .map(word => (word.length < 30 ? word : word.substr(0, 30)))
+      .join(" ");
+    return `${text}...`;
+  };
+
   return (
     <li className="card" onClick={onClick}>
-      {card.tags.join(", ")}
+      <div>{getShortCardQuestion()}</div>
+      <br />
+      <div>
+        {card.tags.map(tag => (
+          <span className="tag">{tag}</span>
+        ))}
+      </div>
     </li>
   );
 };

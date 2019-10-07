@@ -31,12 +31,14 @@ interface State {
     front: string;
     back: string;
   };
+  previousCardBack: string;
 }
 
 class CardPreview extends Component<Props, State> {
   public state = {
     isBackVisible: false,
     isScriptLoading: true,
+    previousCardBack: "",
     processedCard: !!this.props.card && cardProcessor(this.props.card)
   };
 
@@ -45,11 +47,18 @@ class CardPreview extends Component<Props, State> {
   public componentDidUpdate = (props: Props) => {
     if (this.props.card !== props.card) {
       this.setState(() => ({ isScriptLoading: true }));
+      this.resetStore();
       this.clearShowFrontTimer();
       this.setState(() => {
         const processedCard = cardProcessor(this.props.card);
         this.showFront(processedCard.front);
-        return { processedCard, isBackVisible: false };
+
+        return {
+          processedCard,
+          /* tslint:disable object-literal-sort-keys */
+          isBackVisible: false,
+          previousCardBack: processedCard.back
+        };
       });
     }
   };
@@ -58,6 +67,19 @@ class CardPreview extends Component<Props, State> {
     if (this.showFrontTimer) {
       clearTimeout(this.showFrontTimer);
       this.showFrontTimer = null;
+    }
+  };
+
+  /*
+   Our card processors save the state of inputs in front card after user
+   manipulation and then restore it when show the answer. The solution is
+   to run previous back card script, after it we don't save user's answer.
+   */
+  public resetStore = () => {
+    const { previousCardBack } = this.state;
+
+    if (previousCardBack) {
+      this.runCardScript(previousCardBack);
     }
   };
 

@@ -20,14 +20,13 @@ const cardProcessor = (card: ICardDefinition | null) => {
   }
 };
 
-const INTERVAL = 100;
-
 interface Props {
   card: ICardDefinition | null;
 }
 
 interface State {
   isBackVisible: boolean;
+  isScriptLoading: boolean;
   processedCard: {
     front: string;
     back: string;
@@ -37,27 +36,37 @@ interface State {
 class CardPreview extends Component<Props, State> {
   public state = {
     isBackVisible: false,
+    isScriptLoading: true,
     processedCard: !!this.props.card && cardProcessor(this.props.card)
   };
 
-  public timer: NodeJS.Timeout | null = null;
+  public showFrontTimer: NodeJS.Timeout | null = null;
 
   public componentDidUpdate = (props: Props) => {
     if (this.props.card !== props.card) {
-      if (this.timer) {
-        clearTimeout(this.timer);
-        this.timer = null;
-      }
+      this.setState(() => ({ isScriptLoading: true }));
+      this.clearShowFrontTimer();
       this.setState(() => {
         const processedCard = cardProcessor(this.props.card);
-        // add setTimeout because script does not work properly
-        this.timer = setTimeout(
-          () => this.runCardScript(processedCard.front),
-          INTERVAL
-        );
+        this.showFront(processedCard.front);
         return { processedCard, isBackVisible: false };
       });
     }
+  };
+
+  public clearShowFrontTimer = () => {
+    if (this.showFrontTimer) {
+      clearTimeout(this.showFrontTimer);
+      this.showFrontTimer = null;
+    }
+  };
+
+  public showFront = (front: string) => {
+    // add setTimeout because script does not work properly
+    this.showFrontTimer = setTimeout(() => {
+      this.runCardScript(front);
+      this.setState(() => ({ isScriptLoading: false }));
+    }, 20);
   };
 
   public showBack = () => {
@@ -69,13 +78,12 @@ class CardPreview extends Component<Props, State> {
     const scriptRegexp = /<script\b[^>]*>([\s\S]*?)<\/script>/gim;
     const scriptMatch = scriptRegexp.exec(htmlWithScript);
 
-    if (scriptMatch) {
+    if (scriptMatch && scriptMatch[1]) {
       const frame = document.querySelector("#frame") as HTMLIFrameElement;
       const body = frame.contentWindow!.document.querySelector("body");
       const scriptElement = document.createElement("script");
       const script = scriptMatch[1].trim();
       // console.log(scriptElement);
-      // console.dir(frame.contentWindow);
       scriptElement.type = "text/javascript";
       scriptElement.text = script;
 
@@ -84,7 +92,7 @@ class CardPreview extends Component<Props, State> {
   };
 
   public render() {
-    const { processedCard, isBackVisible } = this.state;
+    const { processedCard, isBackVisible, isScriptLoading } = this.state;
 
     if (!this.props.card) {
       return null;
@@ -92,7 +100,7 @@ class CardPreview extends Component<Props, State> {
 
     return (
       <div>
-        <Frame id="frame">
+        <Frame id="frame" className={isScriptLoading ? "invisible" : ""}>
           <div dangerouslySetInnerHTML={{ __html: processedCard.front }} />
           {isBackVisible ? (
             <div dangerouslySetInnerHTML={{ __html: processedCard.back }} />

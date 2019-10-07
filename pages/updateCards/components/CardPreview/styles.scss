@@ -2,4 +2,8 @@
   width: 500px;
   height: calc(100vh - 50px);
   border: none;
+
+  &.invisible {
+    visibility: hidden;
+  }
 }

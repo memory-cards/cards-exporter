@@ -6,9 +6,10 @@ import "./styles.scss";
 interface Props {
   card: ICardDefinition;
   selectCard: (selectedCard: ICardDefinition) => void;
+  isSelected: boolean;
 }
 
-const Card = ({ card, selectCard }: Props) => {
+const Card = ({ card, selectCard, isSelected }: Props) => {
   const onClick = () => {
     selectCard(card);
   };
@@ -25,7 +26,10 @@ const Card = ({ card, selectCard }: Props) => {
   };
 
   return (
-    <li className="card" onClick={onClick}>
+    <li
+      className={isSelected ? "card card--selected" : "card"}
+      onClick={onClick}
+    >
       <div>{getShortCardQuestion()}</div>
       <br />
       <div>

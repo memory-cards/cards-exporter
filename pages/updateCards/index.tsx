@@ -41,7 +41,11 @@ class UpdateCardPage extends Component<State> {
         <h2 className="title">Update cards page:</h2>
         <div className="section-container">
           <div className="cards-list">
-            <CardsList cards={cards} selectCard={this.selectCard} />
+            <CardsList
+              cards={cards}
+              selectCard={this.selectCard}
+              selectedCard={selectedCard}
+            />
           </div>
           <div className="section" />
           {!!cards.length && (

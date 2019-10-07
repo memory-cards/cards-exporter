@@ -6,13 +6,18 @@ import Card from "./components/Card";
 interface Props {
   cards: ICardDefinition[];
   selectCard: (selectedCard: ICardDefinition) => void;
+  selectedCard: ICardDefinition | null;
 }
 
-const CardsList = ({ cards, selectCard }: Props) => {
+const CardsList = ({ cards, selectCard, selectedCard }: Props) => {
   return (
     <ul>
       {cards.map(card => (
-        <Card card={card} selectCard={selectCard} />
+        <Card
+          card={card}
+          selectCard={selectCard}
+          isSelected={card === selectedCard}
+        />
       ))}
     </ul>
   );

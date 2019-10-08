@@ -61,13 +61,15 @@ export const getCardData: (cardConfig: {
 export const getAllCards = (): Promise<ICardDefinition[]> =>
   globPromised("data/cards/**/*.json*", {
     ignore: "data/cards/package.json"
-  }).then((files: string[]) =>
-    Promise.all(
-      files.map(fileName =>
+  }).then((files: string[]) => {
+    // get last 100 elements to check deploy issues
+    const smallFilesArray = files.slice(-100);
+    return Promise.all(
+      smallFilesArray.map(fileName =>
         readFilePromised(fileName).then(item => json5.parse(item.toString()))
       )
-    )
-  );
+    );
+  });
 
 export const filterKnownCards = (list: ICardDefinition[]): ICardDefinition[] =>
   list.filter(el => isCardTypeExists(el.type));

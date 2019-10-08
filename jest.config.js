@@ -9,8 +9,8 @@ module.exports = {
   },
   moduleFileExtensions: ["js", "ts", "tsx"],
   moduleNameMapper: {
-    "\\.(css|less|sass|scss)$": "<rootDir>/pages/__mocks__/styleMock.js",
-    "/^~/(.*)": "<rootDir>/$1"
+    "/*.(css|less|sass|scss)$": "<rootDir>/pages/__mocks__/styleMock.js",
+    "^~/(.*)": "<rootDir>/$1"
   },
   collectCoverageFrom: [
     "<rootDir>/**/*.{ts,tsx}",

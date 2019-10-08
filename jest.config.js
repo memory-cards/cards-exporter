@@ -9,19 +9,21 @@ module.exports = {
   },
   moduleFileExtensions: ["js", "ts", "tsx"],
   moduleNameMapper: {
-    "^~/(.*)": "<rootDir>/$1"
+    "\\.(css|less|sass|scss)$": "<rootDir>/pages/__mocks__/styleMock.js",
+    "/^~/(.*)": "<rootDir>/$1"
   },
   collectCoverageFrom: [
     "<rootDir>/**/*.{ts,tsx}",
     "!**/node_modules/**",
     "!**/typings/**"
   ],
-  setupTestFrameworkScriptFile: "<rootDir>/enzyme.js",
+  setupFilesAfterEnv: ["<rootDir>/enzyme.js"],
   silent: false,
   testEnvironment: "node",
   testRegex: "\\.(spec|test)\\.tsx?$",
   transform: {
     "^.+\\.tsx?$": "ts-jest"
   },
-  verbose: true
+  verbose: true,
+  roots: ["<rootDir>/pages"]
 };

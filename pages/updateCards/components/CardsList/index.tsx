@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { ICardDefinition } from "~/typings/ICardDefinition";
 
 import Card from "./components/Card";
@@ -14,6 +14,7 @@ const CardsList = ({ cards, selectCard, selectedCard }: Props) => {
     <ul>
       {cards.map(card => (
         <Card
+          key={card.card.question}
           card={card}
           selectCard={selectCard}
           isSelected={card === selectedCard}

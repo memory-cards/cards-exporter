@@ -65,7 +65,7 @@
     "@zeit/next-typescript": "^1.1.1",
     "anki-apkg-export": "^4.0.2",
     "axios": "^0.18.0",
-    "card-types": "https://github.com/memory-cards/card-types.git#master",
+    "card-types": "https://github.com/memory-cards/card-types.git#helpers",
     "coveralls": "^3.0.2",
     "cross-env": "^5.2.0",
     "enzyme": "^3.7.0",

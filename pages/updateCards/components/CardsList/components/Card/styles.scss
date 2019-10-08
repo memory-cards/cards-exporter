@@ -17,7 +17,7 @@
     transition: all 0.5s;
   }
 
-  .selected {
+  &.selected {
     border-left-color: darkred;
   }
 

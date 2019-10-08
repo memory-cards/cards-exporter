@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { ICardDefinition } from "~/typings/ICardDefinition";
 
 import "./styles.scss";
@@ -15,7 +15,7 @@ const Card = ({ card, selectCard, isSelected }: Props) => {
   };
 
   const getShortCardQuestion = () => {
-    const element = document.createElement("div");
+    const element = window.document.createElement("div");
     element.innerHTML = card.card.question;
     const text = element.innerText
       .split(" ")
@@ -26,15 +26,14 @@ const Card = ({ card, selectCard, isSelected }: Props) => {
   };
 
   return (
-    <li
-      className={isSelected ? "card card--selected" : "card"}
-      onClick={onClick}
-    >
+    <li className={isSelected ? "card selected" : "card"} onClick={onClick}>
       <div>{getShortCardQuestion()}</div>
       <br />
       <div>
         {card.tags.map(tag => (
-          <span className="tag">{tag}</span>
+          <span key={tag} className="tag">
+            {tag}
+          </span>
         ))}
       </div>
     </li>

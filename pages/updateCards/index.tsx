@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { Component } from "react";
+import * as React from "react";
 import { ICardDefinition } from "~/typings/ICardDefinition";
 
 import CardPreview from "./components/CardPreview";
@@ -12,7 +12,7 @@ interface State {
   selectedCard: ICardDefinition;
 }
 
-class UpdateCardPage extends Component<State> {
+class UpdateCardPage extends React.Component<State> {
   public state = {
     cards: [],
     selectedCard: null

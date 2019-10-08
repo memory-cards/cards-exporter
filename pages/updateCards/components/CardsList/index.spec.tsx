@@ -1,22 +1,35 @@
+/**
+ * @jest-environment jsdom
+ */
 import { shallow, ShallowWrapper } from "enzyme";
 import * as React from "react";
-// import * as TestRenderer from "react-test-renderer";
+import * as TestRenderer from "react-test-renderer";
+
+import "./components/Card/windowMock";
 
 import Card from "./components/Card";
 import CardsList from "./index";
 
-const getValue = () => Math.random().toString();
-const newCard = () => ({
-  card: {
-    comment: getValue(),
-    question: getValue()
+const cards = [
+  {
+    card: {
+      comment: "comment1",
+      question: "question1"
+    },
+    lang: "lang1",
+    tags: ["tag1"],
+    type: "type"
   },
-  lang: getValue(),
-  tags: [getValue()],
-  type: getValue()
-});
-
-const cards = [newCard(), newCard()];
+  {
+    card: {
+      comment: "comment2",
+      question: "question2"
+    },
+    lang: "lang2",
+    tags: ["tag2"],
+    type: "type"
+  }
+];
 
 describe("With Enzyme", () => {
   let cardsList: ShallowWrapper;
@@ -40,12 +53,12 @@ describe("With Enzyme", () => {
   });
 });
 
-// describe("With Snapshot Testing", () => {
-//   it('IndexPage shows "Cards Exporter"', () => {
-//     const component = TestRenderer.create(
-//       <CardsList cards={cards} selectCard={jest.fn()} selectedCard={cards[0]} />
-//     );
-//     const tree = component.toJSON();
-//     expect(tree).toMatchSnapshot();
-//   });
-// });
+describe("With Snapshot Testing", () => {
+  it('IndexPage shows "Cards Exporter"', () => {
+    const component = TestRenderer.create(
+      <CardsList cards={cards} selectCard={jest.fn()} selectedCard={cards[0]} />
+    );
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+});

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`With Snapshot Testing IndexPage shows "Cards Exporter" 1`] = `
+exports[`With Snapshot Testing CardsList 1`] = `
 <ul>
   <li
     className="card selected"

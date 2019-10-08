@@ -54,7 +54,7 @@ describe("With Enzyme", () => {
 });
 
 describe("With Snapshot Testing", () => {
-  it('IndexPage shows "Cards Exporter"', () => {
+  it("CardsList", () => {
     const component = TestRenderer.create(
       <CardsList cards={cards} selectCard={jest.fn()} selectedCard={cards[0]} />
     );

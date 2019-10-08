@@ -9,7 +9,7 @@ import "./styles.scss";
 
 interface State {
   cards: ICardDefinition[];
-  selectedCard: ICardDefinition;
+  selectedCard: ICardDefinition | null;
 }
 
 class UpdateCardPage extends React.Component<State> {
@@ -34,8 +34,6 @@ class UpdateCardPage extends React.Component<State> {
   public render() {
     const { cards, selectedCard } = this.state;
 
-    /* tslint:disable no-console */
-    console.log("selectedCard", this.state);
     return (
       <div className="container">
         <h2 className="title">Update cards page:</h2>

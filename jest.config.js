@@ -9,7 +9,7 @@ module.exports = {
   },
   moduleFileExtensions: ["js", "ts", "tsx"],
   moduleNameMapper: {
-    "^.+\\.(css|scss)$": "<rootDir>/pages/__mocks__/styleMock.js",
+    "^.+\\.(css|scss)$": "identity-obj-proxy",
     "^~/(.*)": "<rootDir>/$1"
   },
   collectCoverageFrom: [

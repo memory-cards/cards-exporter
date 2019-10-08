@@ -1,5 +1,5 @@
 /* tslint:disable no-var-requires no-submodule-imports */
-import React, { Component } from "react";
+import * as React from "react";
 import Frame from "react-frame-component";
 import { ICardDefinition } from "~/typings/ICardDefinition";
 
@@ -34,7 +34,7 @@ interface State {
   previousCardBack: string;
 }
 
-class CardPreview extends Component<Props, State> {
+class CardPreview extends React.Component<Props, State> {
   public state = {
     isBackVisible: false,
     isScriptLoading: true,
@@ -101,9 +101,11 @@ class CardPreview extends Component<Props, State> {
     const scriptMatch = scriptRegexp.exec(htmlWithScript);
 
     if (scriptMatch && scriptMatch[1]) {
-      const frame = document.querySelector("#frame") as HTMLIFrameElement;
+      const frame = window.document.querySelector(
+        "#frame"
+      ) as HTMLIFrameElement;
       const body = frame.contentWindow!.document.querySelector("body");
-      const scriptElement = document.createElement("script");
+      const scriptElement = window.document.createElement("script");
       const script = scriptMatch[1].trim();
       // console.log(scriptElement);
       scriptElement.type = "text/javascript";
@@ -122,16 +124,14 @@ class CardPreview extends Component<Props, State> {
     }
 
     return (
-      <div>
-        <Frame id="frame" className={isScriptLoading ? "invisible" : ""}>
-          <div dangerouslySetInnerHTML={{ __html: processedCard.front }} />
-          {isBackVisible ? (
-            <div dangerouslySetInnerHTML={{ __html: processedCard.back }} />
-          ) : (
-            <button onClick={this.showBack}>Show back</button>
-          )}
-        </Frame>
-      </div>
+      <Frame id="frame" className={isScriptLoading ? "invisible" : ""}>
+        <div dangerouslySetInnerHTML={{ __html: processedCard.front }} />
+        {isBackVisible ? (
+          <div dangerouslySetInnerHTML={{ __html: processedCard.back }} />
+        ) : (
+          <button onClick={this.showBack}>Show back</button>
+        )}
+      </Frame>
     );
   }
 }

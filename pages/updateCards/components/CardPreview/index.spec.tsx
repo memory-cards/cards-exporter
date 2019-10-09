@@ -47,6 +47,12 @@ describe("With Enzyme", () => {
   });
 
   describe("Card", () => {
+    it("renders nothing if no selected card", () => {
+      component = shallow(<CardPreview card={null} />);
+
+      expect(component.getElement()).toBe(null);
+    });
+
     it("renders Frame", () => {
       expect(component.find(Frame).exists()).toBe(true);
     });
@@ -133,12 +139,21 @@ describe("With Enzyme", () => {
     });
 
     describe("clearShowFrontTimer", () => {
-      it("clears timer", () => {
+      it("clears timer if has showFrontTimer", () => {
         const timer = setTimeout(() => ({}), 50);
-        (component.instance() as CardPreview).showFrontTimer = timer;
-        (component.instance() as CardPreview).clearShowFrontTimer();
+        const cardPreview = component.instance() as CardPreview;
+        cardPreview.showFrontTimer = timer;
+        cardPreview.clearShowFrontTimer();
 
-        expect((component.instance() as CardPreview).showFrontTimer).toBe(null);
+        expect(cardPreview.showFrontTimer).toBe(null);
+      });
+
+      it("does nothing if no showFrontTimer", () => {
+        const cardPreview = component.instance() as CardPreview;
+        cardPreview.showFrontTimer = null;
+        cardPreview.clearShowFrontTimer();
+
+        expect(cardPreview.showFrontTimer).toBe(null);
       });
     });
   });

@@ -18,7 +18,7 @@ body {
 .cards-list {
   margin: 10px;
   width: 300px;
-  max-height: calc(100vh - 50px);
+  height: calc(100vh - 50px);
   overflow-y: auto;
 
   ul {

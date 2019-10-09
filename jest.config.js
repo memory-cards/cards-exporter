@@ -17,7 +17,7 @@ module.exports = {
     "!**/node_modules/**",
     "!**/typings/**"
   ],
-  setupFilesAfterEnv: ["<rootDir>/enzyme.js"],
+  setupTestFrameworkScriptFile: "<rootDir>/enzyme.js",
   silent: false,
   testEnvironment: "node",
   testRegex: "\\.(spec|test)\\.tsx?$",

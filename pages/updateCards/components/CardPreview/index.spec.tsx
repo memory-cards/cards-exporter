@@ -4,11 +4,25 @@
 import { shallow, ShallowWrapper } from "enzyme";
 import * as React from "react";
 import Frame from "react-frame-component";
-// import * as TestRenderer from "react-test-renderer";
 
 jest.mock("card-types/types/choose_sequence", () => () => ({
-  back: "back",
-  front: "front"
+  back: "chooseSequenceBack",
+  front: "chooseSequenceFront"
+}));
+
+jest.mock("card-types/types/choose_options", () => () => ({
+  back: "chooseOptionsBack",
+  front: "chooseOptionsFront"
+}));
+
+jest.mock("card-types/types/order_items", () => () => ({
+  back: "orderItemsBack",
+  front: "orderItemsFront"
+}));
+
+jest.mock("card-types/types/info", () => () => ({
+  back: "infoBack",
+  front: "infoFront"
 }));
 
 import "../CardsList/components/Card/windowMock";
@@ -37,11 +51,21 @@ describe("With Enzyme", () => {
       expect(component.find(Frame).exists()).toBe(true);
     });
 
-    it("renders front of the card", () => {
-      const front = component.find("div").at(0);
-      expect(front.exists()).toBe(true);
-      expect(front.prop("dangerouslySetInnerHTML")!.__html).toBe("front");
-    });
+    const testFrontRender = (type: string, expectedFront: string) => {
+      it(`renders front for ${type} card`, () => {
+        component = shallow(<CardPreview card={{ ...card, type }} />);
+        const front = component.find("div").at(0);
+        expect(front.exists()).toBe(true);
+        expect(front.prop("dangerouslySetInnerHTML")!.__html).toBe(
+          expectedFront
+        );
+      });
+    };
+
+    testFrontRender("choose_sequence", "chooseSequenceFront");
+    testFrontRender("choose_options", "chooseOptionsFront");
+    testFrontRender("order_items", "orderItemsFront");
+    testFrontRender("info", "infoFront");
 
     it("does not render back of the card initially", () => {
       const back = component.find("div").at(1);
@@ -119,13 +143,3 @@ describe("With Enzyme", () => {
     });
   });
 });
-
-// describe("With Snapshot Testing", () => {
-//   it('IndexPage shows "Cards Exporter"', () => {
-//     const component = TestRenderer.create(
-//       <Card card={card} selectCard={jest.fn()} isSelected={false} />
-//     );
-//     const tree = component.toJSON();
-//     expect(tree).toMatchSnapshot();
-//   });
-// });

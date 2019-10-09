@@ -25,5 +25,5 @@ module.exports = {
     "^.+\\.tsx?$": "ts-jest"
   },
   verbose: true,
-  roots: ["<rootDir>/pages", "<rootDir>/api"]
+  roots: ["<rootDir>/pages", "<rootDir>/api", "<rootDir>/utils"]
 };

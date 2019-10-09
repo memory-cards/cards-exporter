@@ -42,7 +42,7 @@ jest.mock(
 );
 
 jest.mock("glob", () => ({
-  Glob: (pattern: string, cb: (_: null, data: string[]) => void) =>
+  Glob: (pattern: string, {}, cb: (_: null, data: string[]) => void) =>
     cb(null, [
       `${pattern} - data/cards/1.json`,
       `${pattern} - data/cards/2.json`
@@ -125,10 +125,10 @@ describe("cardsUtils", () => {
       const cards = await getAllCards();
       expect(cards).toMatchObject([
         {
-          type: "data/cards/**/*.json* - data/cards/1.json"
+          type: "data/cards/general-development/**/*.json* - data/cards/1.json"
         },
         {
-          type: "data/cards/**/*.json* - data/cards/2.json"
+          type: "data/cards/general-development/**/*.json* - data/cards/2.json"
         }
       ]);
     });

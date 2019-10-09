@@ -156,5 +156,45 @@ describe("With Enzyme", () => {
         expect(cardPreview.showFrontTimer).toBe(null);
       });
     });
+
+    describe("componentDidUpdate", () => {
+      it("calls methods and changes state correctly", () => {
+        const newCard = { ...card, type: "info" };
+        const cardPreview = component.instance() as CardPreview;
+        const spyResetStore = jest.spyOn(cardPreview, "resetStore");
+        const spyClearShowFrontTimer = jest.spyOn(
+          cardPreview,
+          "clearShowFrontTimer"
+        );
+        component.setProps({ card: newCard });
+
+        expect(cardPreview.state.processedCard).toMatchObject({
+          back: "infoBack",
+          front: "infoFront"
+        });
+        expect(cardPreview.state.isBackVisible).toBe(false);
+        expect(cardPreview.state.previousCardBack).toBe("infoBack");
+        expect(spyResetStore).toHaveBeenCalledTimes(1);
+        expect(spyClearShowFrontTimer).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    describe("resetStore", () => {
+      let spy: jest.SpyInstance<any>;
+      let cardPreview: CardPreview;
+
+      beforeEach(() => {
+        cardPreview = component.instance() as CardPreview;
+        spy = jest.spyOn(cardPreview, "runCardScript");
+      });
+
+      it("calls runCardScript with correct value", () => {
+        const previousCardBack = "previousCardBack";
+        component.setState({ previousCardBack });
+        cardPreview.resetStore();
+
+        expect(spy).toHaveBeenCalledWith(previousCardBack);
+      });
+    });
   });
 });

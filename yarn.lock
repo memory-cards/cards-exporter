@@ -2176,9 +2176,9 @@ capture-stack-trace@^1.0.0:
   resolved "https://registry.yarnpkg.com/capture-stack-trace/-/capture-stack-trace-1.0.1.tgz#a6c0bbe1f38f3aa0b92238ecb6ff42c344d4135d"
   integrity sha512-mYQLZnx5Qt1JgB1WEiMCf2647plpGeQ2NMR/5L0HNZzGQo4fuSPnK+wjfPnKZV0aiJDgzmWqqkV/g7JD+DW0qw==
 
-"card-types@https://github.com/memory-cards/card-types.git#helpers":
+"card-types@https://github.com/memory-cards/card-types.git#master":
   version "1.0.0"
-  resolved "https://github.com/memory-cards/card-types.git#7568a15a23df6fc4f165eb656d92a0d1c4d82fca"
+  resolved "https://github.com/memory-cards/card-types.git#43bc27be16eeb63ce8ebacd5f13a172e649c2f20"
   dependencies:
     anki-apkg-export "^4.0.2"
     json5 "^2.1.0"

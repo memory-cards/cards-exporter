@@ -8,7 +8,7 @@ body {
 }
 
 .container {
-  background-color: #beb5b5;
+  background-color: #d4cfd3;
 }
 
 .section-container {
@@ -16,9 +16,9 @@ body {
 }
 
 .cards-list {
-  margin: 10px;
+  margin: 0 10px;
   width: 300px;
-  height: calc(100vh - 50px);
+  height: calc(100vh - 30px);
   overflow-y: auto;
 
   ul {
@@ -30,4 +30,5 @@ body {
 
 .section {
   flex: 1;
+  margin: 20px;
 }

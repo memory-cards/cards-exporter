@@ -4,11 +4,25 @@
 import { shallow, ShallowWrapper } from "enzyme";
 import * as React from "react";
 import Frame from "react-frame-component";
-// import * as TestRenderer from "react-test-renderer";
 
 jest.mock("card-types/types/choose_sequence", () => () => ({
-  back: "back",
-  front: "front"
+  back: "chooseSequenceBack",
+  front: "chooseSequenceFront"
+}));
+
+jest.mock("card-types/types/choose_options", () => () => ({
+  back: "chooseOptionsBack",
+  front: "chooseOptionsFront"
+}));
+
+jest.mock("card-types/types/order_items", () => () => ({
+  back: "orderItemsBack",
+  front: "orderItemsFront"
+}));
+
+jest.mock("card-types/types/info", () => () => ({
+  back: "infoBack",
+  front: "infoFront"
 }));
 
 import "../CardsList/components/Card/windowMock";
@@ -33,15 +47,31 @@ describe("With Enzyme", () => {
   });
 
   describe("Card", () => {
+    it("renders nothing if no selected card", () => {
+      component = shallow(<CardPreview card={null} />);
+
+      expect(component.getElement()).toBe(null);
+    });
+
     it("renders Frame", () => {
       expect(component.find(Frame).exists()).toBe(true);
     });
 
-    it("renders front of the card", () => {
-      const front = component.find("div").at(0);
-      expect(front.exists()).toBe(true);
-      expect(front.prop("dangerouslySetInnerHTML")!.__html).toBe("front");
-    });
+    const testFrontRender = (type: string, expectedFront: string) => {
+      it(`renders front for ${type} card`, () => {
+        component = shallow(<CardPreview card={{ ...card, type }} />);
+        const front = component.find("div").at(0);
+        expect(front.exists()).toBe(true);
+        expect(front.prop("dangerouslySetInnerHTML")!.__html).toBe(
+          expectedFront
+        );
+      });
+    };
+
+    testFrontRender("choose_sequence", "chooseSequenceFront");
+    testFrontRender("choose_options", "chooseOptionsFront");
+    testFrontRender("order_items", "orderItemsFront");
+    testFrontRender("info", "infoFront");
 
     it("does not render back of the card initially", () => {
       const back = component.find("div").at(1);
@@ -109,23 +139,62 @@ describe("With Enzyme", () => {
     });
 
     describe("clearShowFrontTimer", () => {
-      it("clears timer", () => {
+      it("clears timer if has showFrontTimer", () => {
         const timer = setTimeout(() => ({}), 50);
-        (component.instance() as CardPreview).showFrontTimer = timer;
-        (component.instance() as CardPreview).clearShowFrontTimer();
+        const cardPreview = component.instance() as CardPreview;
+        cardPreview.showFrontTimer = timer;
+        cardPreview.clearShowFrontTimer();
 
-        expect((component.instance() as CardPreview).showFrontTimer).toBe(null);
+        expect(cardPreview.showFrontTimer).toBe(null);
+      });
+
+      it("does nothing if no showFrontTimer", () => {
+        const cardPreview = component.instance() as CardPreview;
+        cardPreview.showFrontTimer = null;
+        cardPreview.clearShowFrontTimer();
+
+        expect(cardPreview.showFrontTimer).toBe(null);
+      });
+    });
+
+    describe("componentDidUpdate", () => {
+      it("calls methods and changes state correctly", () => {
+        const newCard = { ...card, type: "info" };
+        const cardPreview = component.instance() as CardPreview;
+        const spyResetStore = jest.spyOn(cardPreview, "resetStore");
+        const spyClearShowFrontTimer = jest.spyOn(
+          cardPreview,
+          "clearShowFrontTimer"
+        );
+        component.setProps({ card: newCard });
+
+        expect(cardPreview.state.processedCard).toMatchObject({
+          back: "infoBack",
+          front: "infoFront"
+        });
+        expect(cardPreview.state.isBackVisible).toBe(false);
+        expect(cardPreview.state.previousCardBack).toBe("infoBack");
+        expect(spyResetStore).toHaveBeenCalledTimes(1);
+        expect(spyClearShowFrontTimer).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    describe("resetStore", () => {
+      let spy: jest.SpyInstance<any>;
+      let cardPreview: CardPreview;
+
+      beforeEach(() => {
+        cardPreview = component.instance() as CardPreview;
+        spy = jest.spyOn(cardPreview, "runCardScript");
+      });
+
+      it("calls runCardScript with correct value", () => {
+        const previousCardBack = "previousCardBack";
+        component.setState({ previousCardBack });
+        cardPreview.resetStore();
+
+        expect(spy).toHaveBeenCalledWith(previousCardBack);
       });
     });
   });
 });
-
-// describe("With Snapshot Testing", () => {
-//   it('IndexPage shows "Cards Exporter"', () => {
-//     const component = TestRenderer.create(
-//       <Card card={card} selectCard={jest.fn()} isSelected={false} />
-//     );
-//     const tree = component.toJSON();
-//     expect(tree).toMatchSnapshot();
-//   });
-// });

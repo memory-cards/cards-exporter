@@ -9,6 +9,7 @@ module.exports = {
   },
   moduleFileExtensions: ["js", "ts", "tsx"],
   moduleNameMapper: {
+    "^.+\\.(css|scss)$": "identity-obj-proxy",
     "^~/(.*)": "<rootDir>/$1"
   },
   collectCoverageFrom: [
@@ -23,5 +24,6 @@ module.exports = {
   transform: {
     "^.+\\.tsx?$": "ts-jest"
   },
-  verbose: true
+  verbose: true,
+  roots: ["<rootDir>/pages", "<rootDir>/api", "<rootDir>/utils"]
 };

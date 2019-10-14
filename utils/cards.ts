@@ -59,7 +59,9 @@ export const getCardData: (cardConfig: {
 };
 
 export const getAllCards = (): Promise<ICardDefinition[]> =>
-  globPromised("data/cards/**/*.json*").then((files: string[]) =>
+  globPromised("data/cards/**/*.json*", {
+    ignore: "data/cards/package.json"
+  }).then((files: string[]) =>
     Promise.all(
       files.map(fileName =>
         readFilePromised(fileName).then(item => json5.parse(item.toString()))

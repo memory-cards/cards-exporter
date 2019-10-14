@@ -1,0 +1,31 @@
+.card {
+  background-color: #ffffff;
+  margin: 0 5px 5px;
+  padding: 5px;
+  min-height: 40px;
+  border-radius: 6px;
+  box-shadow: 3px 3px 3px darkslategray;
+  border-left: 3px solid transparent;
+
+  &:last-child {
+    margin-bottom: 3px;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: #eeeded;
+    transition: all 0.5s;
+  }
+
+  &.selected {
+    border-left-color: darkred;
+  }
+
+  .tag {
+    display: inline-block;
+    background-color: lightgray;
+    margin: 4px;
+    border-radius: 6px;
+    padding: 0px 5px;
+  }
+}

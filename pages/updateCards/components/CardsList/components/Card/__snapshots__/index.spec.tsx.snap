@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`With Snapshot Testing IndexPage shows "Cards Exporter" 1`] = `
+<li
+  className="card"
+  onClick={[Function]}
+>
+  <div>
+    1 1 1 1 1 1 1 1 1 1...
+  </div>
+  <br />
+  <div>
+    <span
+      className="tag"
+    >
+      js
+    </span>
+    <span
+      className="tag"
+    >
+      ts
+    </span>
+  </div>
+</li>
+`;

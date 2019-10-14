@@ -1,0 +1,34 @@
+body {
+  margin: 0;
+}
+
+.title {
+  margin: 0;
+  height: 30px;
+}
+
+.container {
+  background-color: #d4cfd3;
+}
+
+.section-container {
+  display: flex;
+}
+
+.cards-list {
+  margin: 0 10px;
+  width: 300px;
+  height: calc(100vh - 30px);
+  overflow-y: auto;
+
+  ul {
+    margin: 0;
+    padding-left: 0;
+    list-style-type: none;
+  }
+}
+
+.section {
+  flex: 1;
+  margin: 20px;
+}

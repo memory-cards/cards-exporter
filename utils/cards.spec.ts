@@ -42,7 +42,7 @@ jest.mock(
 );
 
 jest.mock("glob", () => ({
-  Glob: (pattern: string, cb: (_: null, data: string[]) => void) =>
+  Glob: (pattern: string, {}, cb: (_: null, data: string[]) => void) =>
     cb(null, [
       `${pattern} - data/cards/1.json`,
       `${pattern} - data/cards/2.json`

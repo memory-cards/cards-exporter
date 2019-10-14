@@ -14,3 +14,13 @@ export const getRemoveCommand = (pathToRemove: string) => {
     ? `if exist "${winPathToRemove}" rmdir /s /q "${winPathToRemove}"`
     : `rm -rf "${pathToRemove}"`;
 };
+
+export const showMemory = () => {
+  const used = process.memoryUsage() as any;
+  // tslint:disable
+  for (const key in used) {
+    console.log(
+      `listCards${key} ${Math.round((used[key] / 1024 / 1024) * 100) / 100} MB`
+    );
+  }
+};

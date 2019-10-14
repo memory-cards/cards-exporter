@@ -1,10 +1,10 @@
-import { filterKnownCards, getAllCards } from "~/utils/cards";
+import { filterKnownCards, getAllTags } from "~/utils/cards";
 import { RepoTags } from "../typings/common";
 
 export const repoTags: RepoTags = {};
 
 export const collectAllTags = () =>
-  getAllCards()
+  getAllTags()
     .then(cards => filterKnownCards(cards))
     .then(cards =>
       cards.reduce((currentTags: RepoTags, card) => {

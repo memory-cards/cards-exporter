@@ -1,10 +1,12 @@
 import { Request, Response } from "express";
 import { getAllCards } from "~/utils/cards";
+import { showMemory } from "~/utils/env";
 
 export default (_: Request, response: Response) =>
-  getAllCards().then(filesInfo =>
-    response.send({
-      apiName: "cards/list",
-      cards: filesInfo
-    })
-  );
+  getAllCards().then((cards: string[]) => {
+    showMemory();
+    return response.send({
+      cards,
+      apiName: "cards/list"
+    });
+  });

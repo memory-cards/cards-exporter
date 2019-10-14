@@ -5,6 +5,7 @@ import next from "next";
 
 import api from "./api";
 import * as cardsUtils from "./utils/cards";
+import { showMemory } from "./utils/env";
 import { collectAllTags } from "./utils/tags";
 
 const PORT = process.env.PORT || 8080;
@@ -25,7 +26,13 @@ Sentry.init({
 app
   .prepare()
   .then(() => cardsUtils.setupCardsStorage())
+  .then(() => {
+    showMemory();
+  })
   .then(() => collectAllTags())
+  .then(() => {
+    showMemory();
+  })
   .then(() => {
     const server = express();
     server.use(Sentry.Handlers.requestHandler() as express.RequestHandler);

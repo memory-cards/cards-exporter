@@ -5,11 +5,11 @@ import Card from "./components/Card";
 
 interface Props {
   cards: ICardDefinition[];
-  selectCard: (selectedCard: ICardDefinition) => void;
-  selectedCard: ICardDefinition | null;
+  selectCard: (selectedCard: string) => void;
+  selectedCard: string | null;
 }
 
-const CardsList = ({ cards, selectCard, selectedCard }: Props) => {
+const CardsList = ({ cards, selectCard }: Props) => {
   return (
     <ul>
       {cards.map(card => (
@@ -17,7 +17,7 @@ const CardsList = ({ cards, selectCard, selectedCard }: Props) => {
           key={card.card.question}
           card={card}
           selectCard={selectCard}
-          isSelected={card === selectedCard}
+          isSelected={false}
         />
       ))}
     </ul>

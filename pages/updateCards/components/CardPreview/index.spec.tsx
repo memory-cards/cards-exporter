@@ -43,7 +43,7 @@ describe("With Enzyme", () => {
   let component: ShallowWrapper;
 
   beforeEach(() => {
-    component = shallow(<CardPreview card={card} />);
+    component = shallow(<CardPreview card={"card"} />);
   });
 
   describe("Card", () => {
@@ -59,7 +59,7 @@ describe("With Enzyme", () => {
 
     const testFrontRender = (type: string, expectedFront: string) => {
       it(`renders front for ${type} card`, () => {
-        component = shallow(<CardPreview card={{ ...card, type }} />);
+        component = shallow(<CardPreview card={"{ ...card, type }"} />);
         const front = component.find("div").at(0);
         expect(front.exists()).toBe(true);
         expect(front.prop("dangerouslySetInnerHTML")!.__html).toBe(

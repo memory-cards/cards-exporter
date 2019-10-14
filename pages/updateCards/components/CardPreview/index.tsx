@@ -1,4 +1,5 @@
 /* tslint:disable no-var-requires no-submodule-imports */
+import axios from "axios";
 import * as React from "react";
 import Frame from "react-frame-component";
 import { ICardDefinition } from "~/typings/ICardDefinition";
@@ -21,7 +22,7 @@ const cardProcessor = (card: ICardDefinition | null) => {
 };
 
 interface Props {
-  card: ICardDefinition | null;
+  card: string | null;
 }
 
 interface State {
@@ -39,18 +40,41 @@ class CardPreview extends React.Component<Props, State> {
     isBackVisible: false,
     isScriptLoading: true,
     previousCardBack: "",
-    processedCard: !!this.props.card && cardProcessor(this.props.card)
+    processedCard: { back: "", front: "" }
   };
 
   public showFrontTimer: NodeJS.Timeout | null = null;
 
-  public componentDidUpdate = (props: Props) => {
+  public getCard = () => {};
+
+  public async componentDidMount() {
+    if (this.props.card) {
+      try {
+        const { data } = await axios.get(`/api/cards/card`, {
+          params: {
+            filename: this.props.card
+          }
+        });
+        console.log(data);
+        this.setState({ processedCard: cardProcessor(data) });
+      } catch (e) {
+        //
+      }
+    }
+  }
+
+  public componentDidUpdate = async (props: Props) => {
     if (this.props.card !== props.card) {
       this.setState(() => ({ isScriptLoading: true }));
       this.resetStore();
       this.clearShowFrontTimer();
+      const { data } = await axios.get(`/api/cards/card`, {
+        params: {
+          filename: this.props.card
+        }
+      });
       this.setState(() => {
-        const processedCard = cardProcessor(this.props.card);
+        const processedCard = cardProcessor(data);
         this.showFront(processedCard.front);
 
         return {

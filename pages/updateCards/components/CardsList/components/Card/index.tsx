@@ -5,13 +5,16 @@ import "./styles.scss";
 
 interface Props {
   card: ICardDefinition;
-  selectCard: (selectedCard: ICardDefinition) => void;
+  selectCard: (selectedCard: string) => void;
   isSelected: boolean;
 }
 
 const Card = ({ card, selectCard, isSelected }: Props) => {
   const onClick = () => {
-    selectCard(card);
+    // @ts-ignore
+    console.log(card.fileName);
+    // @ts-ignore
+    selectCard(card.fileName);
   };
 
   const getShortCardQuestion = () => {

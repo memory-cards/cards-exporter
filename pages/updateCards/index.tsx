@@ -9,7 +9,7 @@ import "./styles.scss";
 
 interface State {
   cards: ICardDefinition[];
-  selectedCard: ICardDefinition | null;
+  selectedCard: string | null;
 }
 
 class UpdateCardPage extends React.Component<State> {
@@ -27,7 +27,7 @@ class UpdateCardPage extends React.Component<State> {
     }
   }
 
-  public selectCard = (selectedCard: ICardDefinition) => {
+  public selectCard = (selectedCard: string) => {
     this.setState(() => ({ selectedCard }));
   };
 

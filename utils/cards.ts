@@ -58,13 +58,48 @@ export const getCardData: (cardConfig: {
   return processor(cardConfig);
 };
 
-export const getAllCards = (): Promise<ICardDefinition[]> =>
+export const getCardFilenames = () => {
+  return globPromised("data/cards/**/*.json*", {
+    ignore: "data/cards/package.json"
+  });
+};
+
+export const getAllCards = (): Promise<any[]> =>
+  globPromised("data/cards/**/*.json*", {
+    ignore: "data/cards/package.json"
+  }).then((files: string[]) => {
+    return Promise.all(
+      files.map(fileName =>
+        readFilePromised(fileName).then(item => {
+          const card = json5.parse(item.toString());
+
+          return {
+            fileName,
+            type: card.type,
+            lang: card.lang,
+            tags: card.tags,
+            card: {
+              question: card.card.question.substr(0, 100),
+              answers: [],
+              comment: ""
+            }
+          };
+        })
+      )
+    );
+  });
+
+export const getAllTags = (): Promise<any[]> =>
   globPromised("data/cards/**/*.json*", {
     ignore: "data/cards/package.json"
   }).then((files: string[]) =>
     Promise.all(
       files.map(fileName =>
-        readFilePromised(fileName).then(item => json5.parse(item.toString()))
+        readFilePromised(fileName).then(item => {
+          const card = json5.parse(item.toString()).tags;
+
+          return { tags: card.tags, type: card.type };
+        })
       )
     )
   );

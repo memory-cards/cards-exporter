@@ -1,5 +1,6 @@
 /* istanbul ignore file */
 import { Router } from "express";
+import getCardInfo from "./getCardInfo";
 import getDeck from "./getDeck";
 import getTags from "./getTags";
 import listCards from "./listCards";
@@ -14,5 +15,6 @@ router.get("/deck", getDeck);
 // and avoid DOS
 router.get("/update", updateCards);
 router.get("/tags", getTags);
+router.get("/card", getCardInfo);
 
 export default router;

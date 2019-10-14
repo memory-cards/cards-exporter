@@ -125,10 +125,10 @@ describe("cardsUtils", () => {
       const cards = await getAllCards();
       expect(cards).toMatchObject([
         {
-          type: "data/cards/general-development/**/*.json* - data/cards/1.json"
+          type: "data/cards/**/*.json* - data/cards/1.json"
         },
         {
-          type: "data/cards/general-development/**/*.json* - data/cards/2.json"
+          type: "data/cards/**/*.json* - data/cards/2.json"
         }
       ]);
     });

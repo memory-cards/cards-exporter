@@ -2178,7 +2178,7 @@ capture-stack-trace@^1.0.0:
 
 "card-types@https://github.com/memory-cards/card-types.git#master":
   version "1.0.0"
-  resolved "https://github.com/memory-cards/card-types.git#43bc27be16eeb63ce8ebacd5f13a172e649c2f20"
+  resolved "https://github.com/memory-cards/card-types.git#39636b63f61fbc6b6110da5826f97c981ead0e36"
   dependencies:
     anki-apkg-export "^4.0.2"
     json5 "^2.1.0"

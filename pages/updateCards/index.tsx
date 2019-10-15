@@ -2,6 +2,7 @@ import axios from "axios";
 import * as React from "react";
 import { ICardDefinition } from "~/typings/ICardDefinition";
 
+import Header from "../../components/Header";
 import CardPreview from "./components/CardPreview";
 import CardsList from "./components/CardsList";
 
@@ -35,8 +36,8 @@ class UpdateCardPage extends React.Component<State> {
     const { cards, selectedCard } = this.state;
 
     return (
-      <div className="container">
-        <h2 className="title">Update cards page:</h2>
+      <div className="update-page">
+        <Header />
         <div className="section-container">
           <div className="cards-list">
             <CardsList

@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`With Snapshot Testing Header 1`] = `
+<div
+  className="nav"
+>
+  <div
+    className="navbar"
+  >
+    <a
+      href="/api/date"
+      onClick={[Function]}
+    >
+      Date info
+    </a>
+    <a
+      href="/api/cards/list"
+      onClick={[Function]}
+    >
+      Cards info
+    </a>
+    <a
+      href="/api/cards/deck"
+      onClick={[Function]}
+    >
+      Deck info
+    </a>
+    <a
+      href="/api/cards/update"
+      onClick={[Function]}
+    >
+      Last update info
+    </a>
+    <a
+      href="/api/cards/tags"
+      onClick={[Function]}
+    >
+      Tags info
+    </a>
+  </div>
+  <div
+    className="navbar"
+  >
+    <a
+      className=""
+      href="/filterCards"
+      onClick={[Function]}
+    >
+      Filter cards page
+    </a>
+    <a
+      className=""
+      href="/updateCards"
+      onClick={[Function]}
+    >
+      Update cards page
+    </a>
+  </div>
+</div>
+`;

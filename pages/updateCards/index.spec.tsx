@@ -65,7 +65,7 @@ describe("filterCards page", () => {
 
   it("updates props when select card", () => {
     const selectedCard = fetchedCards[1];
-    page.setState({ selectedCard });
+    (page.instance() as UpdateCardsPage).selectCard(selectedCard);
 
     expect(page.find(CardsList).prop("selectedCard")).toBe(selectedCard);
     expect(page.find(CardPreview).prop("card")).toBe(selectedCard);

@@ -51,10 +51,6 @@ describe("filterCards page", () => {
     page = shallow(<UpdateCardsPage {...props} />);
   });
 
-  it("shows correct header", () => {
-    expect(page.find("h2").text()).toEqual("Update cards page:");
-  });
-
   it("renders CardsList with initial data", () => {
     const cardsList = page.find(CardsList);
 

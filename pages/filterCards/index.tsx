@@ -1,6 +1,9 @@
 import axios from "axios";
 import * as React from "react";
 import { RepoTags } from "~/typings/common";
+import Header from "../../components/Header";
+
+import "./styles.scss";
 
 interface SelectedTags {
   [tagName: string]: boolean;
@@ -73,24 +76,27 @@ class FilterCardsPage extends React.Component<State> {
     );
 
     return (
-      <div>
-        <h2>Select required tags:</h2>
-        <ul>
-          {tagsArray.map((tagName: string) => (
-            <li key={tagName} onClick={this.updateSelectedTags}>
-              <input
-                type="checkbox"
-                id={tagName}
-                value={tagName}
-                checked={selectedTags[tagName]}
-              />
-              <label htmlFor={tagName}>{tagName}</label>
-              {` - ${tags[tagName]}`}
-            </li>
-          ))}
-        </ul>
-        <button onClick={this.clearSelectedTags}>Clear all</button>
-        <button onClick={this.getDeck}>Get deck</button>
+      <div className="filter-page">
+        <Header />
+        <div className="filter-container">
+          <h2>Select required tags:</h2>
+          <ul>
+            {tagsArray.map((tagName: string) => (
+              <li key={tagName} onClick={this.updateSelectedTags}>
+                <input
+                  type="checkbox"
+                  id={tagName}
+                  value={tagName}
+                  checked={selectedTags[tagName]}
+                />
+                <label htmlFor={tagName}>{tagName}</label>
+                {` - ${tags[tagName]}`}
+              </li>
+            ))}
+          </ul>
+          <button onClick={this.clearSelectedTags}>Clear all</button>
+          <button onClick={this.getDeck}>Get deck</button>
+        </div>
       </div>
     );
   }

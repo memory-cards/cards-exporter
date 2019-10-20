@@ -2,62 +2,64 @@
 
 exports[`With Snapshot Testing IndexPage shows "Cards Exporter" 1`] = `
 <div>
-  <h1>
-    Cards Exporter
-  </h1>
-  <h3>
-    Pages:
-  </h3>
-  <ul>
-    <li>
+  <div
+    className="nav"
+  >
+    <div
+      className="navbar"
+    >
       <a
         href="/api/date"
+        onClick={[Function]}
       >
         Date info
       </a>
-    </li>
-    <li>
       <a
         href="/api/cards/list"
+        onClick={[Function]}
       >
         Cards info
       </a>
-    </li>
-    <li>
       <a
         href="/api/cards/deck"
+        onClick={[Function]}
       >
         Deck info
       </a>
-    </li>
-    <li>
       <a
         href="/api/cards/update"
+        onClick={[Function]}
       >
         Last update info
       </a>
-    </li>
-    <li>
       <a
         href="/api/cards/tags"
+        onClick={[Function]}
       >
         Tags info
       </a>
-    </li>
-    <li>
+    </div>
+    <div
+      className="navbar"
+    >
       <a
+        className=""
         href="/filterCards"
+        onClick={[Function]}
       >
         Filter cards page
       </a>
-    </li>
-    <li>
       <a
+        className=""
         href="/updateCards"
+        onClick={[Function]}
       >
         Update cards page
       </a>
-    </li>
-  </ul>
+    </div>
+  </div>
+  <h1>
+    Cards Exporter
+  </h1>
 </div>
 `;

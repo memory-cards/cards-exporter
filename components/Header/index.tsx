@@ -7,6 +7,7 @@ import "./styles.scss";
 
 const pages = [
   { href: "/filterCards", label: "Filter cards page" },
+  { href: "/createCard", label: "Create cards page" },
   { href: "/updateCards", label: "Update cards page" }
 ];
 

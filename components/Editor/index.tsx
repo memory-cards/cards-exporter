@@ -30,7 +30,7 @@ class CardEditor extends React.Component<Props> {
           wrapperClassName="wrapperClassName"
           editorClassName="editorClassName"
           onEditorStateChange={editTemplate}
-          {...options}
+          toolbar={options}
         />
         <textarea
           style={{ width: "100%", height: "200px" }}

@@ -1,12 +1,11 @@
 import { convertToRaw, EditorState } from "draft-js";
-// @ts-ignore
 import draftToHtml from "draftjs-to-html";
 import * as React from "react";
 import { Editor } from "react-draft-wysiwyg";
 
 import { options } from "./options";
 
-/* tslint:disable */
+// tslint:disable-next-line: no-submodule-imports
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 // import "./styles.scss";
 
@@ -15,9 +14,20 @@ interface Props {
   editorState?: EditorState;
 }
 
-class CardEditor extends React.Component<Props> {
-  render() {
+interface State {
+  isToolbarVisible: boolean;
+}
+
+class CardEditor extends React.Component<Props, State> {
+  public state = { isToolbarVisible: false };
+
+  public enterEditor = () => this.setState({ isToolbarVisible: true });
+  public leaveEditor = () => this.setState({ isToolbarVisible: false });
+
+  public render() {
     const { editorState, editTemplate } = this.props;
+    const { isToolbarVisible } = this.state;
+
     if (!editorState) {
       return null;
     }
@@ -25,12 +35,15 @@ class CardEditor extends React.Component<Props> {
     return (
       <>
         <Editor
+          onFocus={this.enterEditor}
+          onBlur={this.leaveEditor}
           editorState={editorState}
           toolbarClassName="toolbarClassName"
           wrapperClassName="wrapperClassName"
           editorClassName="editorClassName"
           onEditorStateChange={editTemplate}
           toolbar={options}
+          toolbarHidden={!isToolbarVisible}
         />
         <textarea
           style={{ width: "100%", height: "200px" }}

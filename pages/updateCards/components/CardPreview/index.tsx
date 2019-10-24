@@ -44,23 +44,33 @@ class CardPreview extends React.Component<Props, State> {
 
   public showFrontTimer: NodeJS.Timeout | null = null;
 
-  public componentDidUpdate = (props: Props) => {
-    if (this.props.card !== props.card) {
-      this.setState(() => ({ isScriptLoading: true }));
-      this.resetStore();
-      this.clearShowFrontTimer();
-      this.setState(() => {
-        const processedCard = cardProcessor(this.props.card);
-        this.showFront(processedCard.front);
-
-        return {
-          processedCard,
-          /* tslint:disable object-literal-sort-keys */
-          isBackVisible: false,
-          previousCardBack: processedCard.back
-        };
-      });
+  public componentDidMount() {
+    if (this.props.card) {
+      this.executeCardPreview(this.props.card);
     }
+  }
+
+  public componentDidUpdate = (props: Props) => {
+    if (this.props.card && this.props.card !== props.card) {
+      this.executeCardPreview(this.props.card);
+    }
+  };
+
+  public executeCardPreview = (card: ICardDefinition) => {
+    this.setState(() => ({ isScriptLoading: true }));
+    this.resetStore();
+    this.clearShowFrontTimer();
+    this.setState(() => {
+      const processedCard = cardProcessor(card);
+      this.showFront(processedCard.front);
+
+      return {
+        processedCard,
+        /* tslint:disable object-literal-sort-keys */
+        isBackVisible: false,
+        previousCardBack: processedCard.back
+      };
+    });
   };
 
   public clearShowFrontTimer = () => {

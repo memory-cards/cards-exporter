@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import AnkiExport from "anki-apkg-export";
 import * as fs from "fs";
 import * as tmp from "tmp";
@@ -22,7 +23,7 @@ export const generateDeck = async (
   const apkg = new AnkiExport(name);
   cards.forEach((card: ICardDefinition) => {
     const { front, back, tags } = getCardData(card);
-    apkg.addCard(front, back, tags);
+    apkg.addCard(front, back, { tags });
   });
   return apkg
     .save()

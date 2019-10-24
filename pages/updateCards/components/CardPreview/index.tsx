@@ -5,16 +5,23 @@ import { ICardDefinition } from "~/typings/ICardDefinition";
 
 import "./styles.scss";
 
+enum CardType {
+  INFO = "info",
+  CHOOSE_SEQUENCE = "choose_sequence",
+  CHOOSE_OPTIONS = "choose_options",
+  ORDER_ITEMS = "order_items"
+}
+
 const cardProcessor = (card: ICardDefinition | null) => {
   if (card) {
     switch (card.type) {
-      case "choose_sequence":
+      case CardType.CHOOSE_SEQUENCE:
         return require(`card-types/types/choose_sequence`)(card);
-      case "choose_options":
+      case CardType.CHOOSE_OPTIONS:
         return require(`card-types/types/choose_options`)(card);
-      case "order_items":
+      case CardType.ORDER_ITEMS:
         return require(`card-types/types/order_items`)(card);
-      case "info":
+      case CardType.INFO:
         return require(`card-types/types/info`)(card);
     }
   }

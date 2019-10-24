@@ -1,4 +1,4 @@
-import axios from "axios";
+// import axios from "axios";
 import { ContentState, convertToRaw, EditorState } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
@@ -30,10 +30,15 @@ class CreateCardPage extends React.Component<State> {
 
   public async componentDidMount() {
     try {
-      const { data } = await axios.get(`/api/cards/list`);
-      const card = data.cards[1404];
+      // const { data } = await axios.get(`/api/cards/list`);
+      // const card = data.cards[1404];
 
-      this.setCardToEditorState(card);
+      this.setCardToEditorState({
+        card: { question: "5", comment: "sdlfj" },
+        lang: "5",
+        tags: [],
+        type: "info"
+      });
     } catch (e) {
       //
     }

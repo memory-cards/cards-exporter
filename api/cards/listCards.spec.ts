@@ -1,11 +1,10 @@
 import * as httpMocks from "node-mocks-http";
 import { getAllCards } from "~/utils/cards";
+import listCardsController from "./listCards";
 
 jest.mock("~/utils/cards", () => ({
   getAllCards: () => Promise.resolve(["5", "6"])
 }));
-
-import listCardsController from "./listCards";
 
 describe("listCardsController", () => {
   let req: httpMocks.MockRequest<any>;

@@ -6,17 +6,18 @@ import getDeckController from "./getDeck";
 describe("getDeckController", () => {
   let req: httpMocks.MockRequest<any>;
   let res: httpMocks.MockResponse<any>;
-  let mockFilterKnownCards: jest.SpyInstance<any>;
-  let mockFilterCardsByTags: jest.SpyInstance<any>;
-  let mockGetAllCards: jest.SpyInstance<any>;
-  let generateDeckSpy: jest.SpyInstance<any>;
-  let sendFileSpy: jest.SpyInstance<any>;
-  let sendSpy: jest.SpyInstance<any>;
+  let mockFilterKnownCards: jest.SpyInstance;
+  let mockFilterCardsByTags: jest.SpyInstance;
+  let mockGetAllCards: jest.SpyInstance;
+  let generateDeckSpy: jest.SpyInstance;
+  let sendFileSpy: jest.SpyInstance;
+  let sendSpy: jest.SpyInstance;
 
   beforeEach(() => {
     req = httpMocks.createRequest();
     res = httpMocks.createResponse();
-    sendFileSpy = res.sendFile = jest.fn();
+    sendFileSpy = jest.fn();
+    res.sendFile = sendFileSpy;
     sendSpy = jest.spyOn(res, "send");
     mockFilterKnownCards = jest.spyOn(cards, "filterKnownCards");
     mockFilterCardsByTags = jest.spyOn(cards, "filterCardsByTags");

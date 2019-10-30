@@ -6,7 +6,7 @@ import {
 } from "~/utils/cards";
 import { generateDeck } from "~/utils/decks";
 
-export default (request: Request, response: Response) => {
+export default async (request: Request, response: Response) => {
   const params = request.query;
   const requestedTags = params.tags
     ? Array.isArray(params.tags)

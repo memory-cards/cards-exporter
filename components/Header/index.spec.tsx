@@ -1,5 +1,4 @@
 import { shallow, ShallowWrapper } from "enzyme";
-// tslint:disable no-submodule-imports
 import Link, { LinkProps } from "next/link";
 import * as React from "react";
 import * as TestRenderer from "react-test-renderer";

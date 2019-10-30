@@ -3,7 +3,7 @@ window.document.createElement = jest.fn().mockImplementation(() => {
 
   Object.defineProperty(element, "innerHTML", {
     /* tslint:disable object-literal-shorthand */
-    set: function(x) {
+    set(x) {
       this.innerText = x;
     }
   });

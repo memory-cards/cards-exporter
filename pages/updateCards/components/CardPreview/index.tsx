@@ -16,6 +16,7 @@ const cardProcessor = (card: ICardDefinition | null) => {
         return require(`card-types/types/order_items`)(card);
       case "info":
         return require(`card-types/types/info`)(card);
+      default:
     }
   }
 };
@@ -54,9 +55,8 @@ class CardPreview extends React.Component<Props, State> {
         this.showFront(processedCard.front);
 
         return {
-          processedCard,
-          /* tslint:disable object-literal-sort-keys */
           isBackVisible: false,
+          processedCard,
           previousCardBack: processedCard.back
         };
       });
@@ -129,7 +129,9 @@ class CardPreview extends React.Component<Props, State> {
         {isBackVisible ? (
           <div dangerouslySetInnerHTML={{ __html: processedCard.back }} />
         ) : (
-          <button onClick={this.showBack}>Show back</button>
+          <button onClick={this.showBack} type="submit">
+            Show back
+          </button>
         )}
       </Frame>
     );

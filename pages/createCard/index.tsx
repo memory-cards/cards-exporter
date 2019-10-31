@@ -3,15 +3,18 @@ import { ContentState, convertToRaw, EditorState } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
 import * as React from "react";
+import { CardType } from "~/typings/common";
 import { ICardDefinition } from "~/typings/ICardDefinition";
 
 import CardEditor from "../../components/Editor";
 import Header from "../../components/Header";
 import CardPreview from "../../pages/updateCards/components/CardPreview";
+import CardTypeDropdown from "./CardTypeDropdown";
 
 import "./styles.scss";
 
 type MainCardFieldType = "question" | "comment";
+const cardTypeDropdownOptions = Object.values(CardType);
 
 interface State {
   card: ICardDefinition | null;
@@ -48,7 +51,7 @@ class CreateCardPage extends React.Component<State> {
     const stateCardField = this.getStateMainCardFieldName(mainCardField);
 
     return (editorState: EditorState) => {
-      const html = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+      const html = this.getHtmlEditorContent(editorState);
       this.setState(({ card }: State) => ({
         [stateCardField]: editorState,
         card: {
@@ -66,10 +69,8 @@ class CreateCardPage extends React.Component<State> {
   public showPreview = () => this.setState({ isPreviewVisible: true });
 
   private setCardToEditorState = (card: ICardDefinition) => {
-    this.setCardFieldToEditorState(card.card.question, "question");
-    if (card.card.comment) {
-      this.setCardFieldToEditorState(card.card.comment, "comment");
-    }
+    this.setCardFieldToEditorState(card.card.question || "", "question");
+    this.setCardFieldToEditorState(card.card.comment || "", "comment");
     this.setState({ card });
   };
 
@@ -79,16 +80,42 @@ class CreateCardPage extends React.Component<State> {
   ) => {
     const draft = htmlToDraft(fieldContent);
     const stateCardField = this.getStateMainCardFieldName(mainCardField);
+    let editorState;
 
     if (draft) {
-      const contentState = ContentState.createFromBlockArray(
-        draft.contentBlocks
-      );
-      const editorState = EditorState.createWithContent(contentState);
-      this.setState({ [stateCardField]: editorState });
+      const { contentBlocks } = draft;
+      const contentState = ContentState.createFromBlockArray(contentBlocks);
+      editorState = EditorState.createWithContent(contentState);
     } else {
-      this.setState({ [stateCardField]: EditorState.createEmpty() });
+      editorState = EditorState.createEmpty();
     }
+    this.setState({ [stateCardField]: editorState });
+  };
+
+  public changeCardType = (type: string) => {
+    this.setState(({ card }: State) => ({
+      card: { ...card, type },
+      isPreviewVisible: false
+    }));
+  };
+
+  public getHtmlEditorContent = (editorState: EditorState) =>
+    draftToHtml(convertToRaw(editorState.getCurrentContent()));
+
+  public showResult = () => {
+    const htmlCard = {
+      // @ts-ignore
+      ...this.state.card,
+      card: {
+        comment: this.getHtmlEditorContent(
+          this.state[this.getStateMainCardFieldName("comment")]
+        ),
+        question: this.getHtmlEditorContent(
+          this.state[this.getStateMainCardFieldName("question")]
+        )
+      }
+    };
+    console.log(JSON.stringify(htmlCard));
   };
 
   public render() {
@@ -110,6 +137,11 @@ class CreateCardPage extends React.Component<State> {
           <h1>Create card page:</h1>
           <div className="section-container">
             <div className="section">
+              <h3>Card type:</h3>
+              <CardTypeDropdown
+                options={cardTypeDropdownOptions}
+                onСhangeCardType={this.changeCardType}
+              />
               <h3>Question:</h3>
               <CardEditor
                 editorState={questionEditorState}
@@ -120,6 +152,7 @@ class CreateCardPage extends React.Component<State> {
                 editorState={commentEditorState}
                 editTemplate={this.getEditTemplateHandler("comment")}
               />
+              <button onClick={this.showResult}>Show data</button>
             </div>
             <div className="editor section">
               {isPreviewVisible ? (

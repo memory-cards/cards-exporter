@@ -1,16 +1,10 @@
 /* tslint:disable no-var-requires no-submodule-imports */
 import * as React from "react";
 import Frame from "react-frame-component";
+import { CardType } from "~/typings/common";
 import { ICardDefinition } from "~/typings/ICardDefinition";
 
 import "./styles.scss";
-
-enum CardType {
-  INFO = "info",
-  CHOOSE_SEQUENCE = "choose_sequence",
-  CHOOSE_OPTIONS = "choose_options",
-  ORDER_ITEMS = "order_items"
-}
 
 const cardProcessor = (card: ICardDefinition | null) => {
   if (card) {

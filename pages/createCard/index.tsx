@@ -6,11 +6,11 @@ import * as React from "react";
 import { CardType } from "~/typings/common";
 import { ICardDefinition } from "~/typings/ICardDefinition";
 
-import CardEditor from "../../components/Editor";
-import Header from "../../components/Header";
-import CardPreview from "../../pages/updateCards/components/CardPreview";
-import Select from "./Select";
-import Typeahead, { TypeaheadOption } from "./Typeahead";
+import CardEditor from "~/components/Editor";
+import Header from "~/components/Header";
+import Select from "~/components/Select";
+import Typeahead, { TypeaheadOption } from "~/components/Typeahead";
+import CardPreview from "~/pages/updateCards/components/CardPreview";
 
 import "./styles.scss";
 
@@ -18,7 +18,7 @@ const cardTypeOptions = Object.values(CardType);
 const cardLanguageOptions = ["en", "ru"];
 const EMPTY_CARD = {
   card: { question: "", comment: "" },
-  lang: "en",
+  lang: cardLanguageOptions[0],
   tags: [],
   type: CardType.INFO
 };

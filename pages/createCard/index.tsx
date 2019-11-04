@@ -11,12 +11,14 @@ import Header from "~/components/Header";
 import Select from "~/components/Select";
 import Typeahead, { TypeaheadOption } from "~/components/Typeahead";
 import CardPreview from "~/pages/updateCards/components/CardPreview";
+import CardAnswers from "./CardAnswers";
 
 import "./styles.scss";
 
 const cardTypeOptions = Object.values(CardType);
 const cardLanguageOptions = ["en", "ru"];
 const EMPTY_CARD = {
+  answers: [{ text: "3" }, { text: "5" }],
   card: { question: "", comment: "" },
   lang: cardLanguageOptions[0],
   tags: [],
@@ -136,6 +138,10 @@ class CreateCardPage extends React.Component<State> {
     });
   };
 
+  // public removeAnswer = () => {};
+  // public updateAnswer = () => {};
+  // public addAnswer = () => {};
+
   public render() {
     const {
       questionEditorState,
@@ -160,28 +166,40 @@ class CreateCardPage extends React.Component<State> {
                 options={cardLanguageOptions}
                 onSelectOption={this.changeCardLanguage}
               />
+
               <h4>Tags:</h4>
               <Typeahead
                 options={repoTags}
                 selectedOptions={selectedTags}
                 onChange={this.changeTagSelection}
               />
+
               <h4>Card type:</h4>
               <Select
                 name="card-type"
                 options={cardTypeOptions}
                 onSelectOption={this.changeCardType}
               />
+
               <h4>Question:</h4>
               <CardEditor
                 editorState={questionEditorState}
                 editTemplate={this.getEditTemplateHandler("question")}
               />
+
               <h4>Comment:</h4>
               <CardEditor
                 editorState={commentEditorState}
                 editTemplate={this.getEditTemplateHandler("comment")}
               />
+
+              {card.type !== CardType.INFO && (
+                <>
+                  <h4>Answers:</h4>
+                  <CardAnswers answers={card.answers} />
+                </>
+              )}
+
               <button onClick={this.showResult}>Show data</button>
             </div>
             <div className="editor section">

@@ -1,17 +1,18 @@
 import * as React from "react";
 
 interface Props {
+  name: string;
   options: string[];
-  onСhangeCardType: (value: string) => void;
+  onSelectOption: (value: string) => void;
 }
 
-const CardTypeDropdown = ({ options, onСhangeCardType }: Props) => {
+const Select = ({ options, onSelectOption, name }: Props) => {
   const onChange = (ev: React.ChangeEvent<HTMLSelectElement>) => {
-    onСhangeCardType(ev.target.value);
+    onSelectOption(ev.target.value);
   };
 
   return (
-    <select name="card-type" onChange={onChange}>
+    <select name={name} onChange={onChange}>
       {options.map(option => (
         <option>{option}</option>
       ))}
@@ -19,4 +20,4 @@ const CardTypeDropdown = ({ options, onСhangeCardType }: Props) => {
   );
 };
 
-export default CardTypeDropdown;
+export default Select;

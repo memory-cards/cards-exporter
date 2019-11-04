@@ -9,12 +9,13 @@ import { ICardDefinition } from "~/typings/ICardDefinition";
 import CardEditor from "../../components/Editor";
 import Header from "../../components/Header";
 import CardPreview from "../../pages/updateCards/components/CardPreview";
-import CardTypeDropdown from "./CardTypeDropdown";
+import Select from "./Select";
 import Typeahead, { TypeaheadOption } from "./Typeahead";
 
 import "./styles.scss";
 
-const cardTypeDropdownOptions = Object.values(CardType);
+const cardTypeOptions = Object.values(CardType);
+const cardLanguageOptions = ["en", "ru"];
 const EMPTY_CARD = {
   card: { question: "", comment: "" },
   lang: "en",
@@ -105,6 +106,13 @@ class CreateCardPage extends React.Component<State> {
     }));
   };
 
+  public changeCardLanguage = (lang: string) => {
+    this.setState(({ card }: State) => {
+      card.lang = lang;
+      return { card };
+    });
+  };
+
   public getHtmlEditorContent = (editorState: EditorState) =>
     draftToHtml(convertToRaw(editorState.getCurrentContent()));
 
@@ -143,9 +151,15 @@ class CreateCardPage extends React.Component<State> {
       <div className="create-card-page">
         <Header />
         <div className="create-card-page-container">
-          <h1>Card page:</h1>
+          <h2>Card page:</h2>
           <div className="section-container">
             <div className="section">
+              <h4>Language:</h4>
+              <Select
+                name="card-language"
+                options={cardLanguageOptions}
+                onSelectOption={this.changeCardLanguage}
+              />
               <h4>Tags:</h4>
               <Typeahead
                 options={repoTags}
@@ -153,9 +167,10 @@ class CreateCardPage extends React.Component<State> {
                 onChange={this.changeTagSelection}
               />
               <h4>Card type:</h4>
-              <CardTypeDropdown
-                options={cardTypeDropdownOptions}
-                onСhangeCardType={this.changeCardType}
+              <Select
+                name="card-type"
+                options={cardTypeOptions}
+                onSelectOption={this.changeCardType}
               />
               <h4>Question:</h4>
               <CardEditor

@@ -13,6 +13,7 @@
     "member-ordering": false,
     "no-submodule-imports": [true, "~"],
     "no-implicit-dependencies": [true, ["~", "cards-exporter"]],
+    "prefer-array-literal": false,
     "variable-name": [true, "ban-keywords", "check-format", "allow-pascal-case"]
   }
 }

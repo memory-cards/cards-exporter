@@ -16,8 +16,6 @@ module.exports = withCSS(
           "~": path.resolve(__dirname)
         };
         return config;
-
-        return config;
       }
     })
   )

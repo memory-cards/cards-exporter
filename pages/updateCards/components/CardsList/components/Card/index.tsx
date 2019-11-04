@@ -26,7 +26,10 @@ const Card = ({ card, selectCard, isSelected }: Props) => {
   };
 
   return (
-    <li className={isSelected ? "card selected" : "card"} onClick={onClick}>
+    <li
+      className={isSelected ? "card-item selected" : "card-item"}
+      onClick={onClick}
+    >
       <div>{getShortCardQuestion()}</div>
       <br />
       <div>

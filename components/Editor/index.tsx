@@ -46,7 +46,7 @@ class CardEditor extends React.Component<Props, State> {
           toolbarHidden={!isToolbarVisible}
         />
         <textarea
-          style={{ width: "100%", height: "200px" }}
+          style={{ width: "100%", height: "100px" }}
           disabled
           value={draftToHtml(convertToRaw(editorState!.getCurrentContent()))}
         />

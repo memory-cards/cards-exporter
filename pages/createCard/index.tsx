@@ -18,11 +18,14 @@ import "./styles.scss";
 const cardTypeOptions = Object.values(CardType);
 const cardLanguageOptions = ["en", "ru"];
 const EMPTY_CARD = {
-  answers: [{ text: "3" }, { text: "5" }],
-  card: { question: "", comment: "" },
+  card: {
+    answers: [{ text: "", id: "1111" }],
+    comment: "",
+    question: ""
+  },
   lang: cardLanguageOptions[0],
   tags: [],
-  type: CardType.INFO
+  type: CardType.CHOOSE_SEQUENCE
 };
 
 type MainCardFieldType = "question" | "comment";
@@ -39,7 +42,7 @@ class CreateCardPage extends React.Component<State> {
   public state = {
     card: EMPTY_CARD,
     commentEditorState: EditorState.createEmpty(),
-    isPreviewVisible: true,
+    isPreviewVisible: false,
     questionEditorState: EditorState.createEmpty(),
     repoTags: []
   };
@@ -103,8 +106,7 @@ class CreateCardPage extends React.Component<State> {
 
   public changeCardType = (type: string) => {
     this.setState(({ card }: State) => ({
-      card: { ...card, type },
-      isPreviewVisible: false
+      card: { ...card, type }
     }));
   };
 
@@ -120,9 +122,20 @@ class CreateCardPage extends React.Component<State> {
 
   public showResult = () => {
     const { commentEditorState, questionEditorState, card } = this.state;
+    const answers = card.card.answers.map(answer => {
+      const ans: { text: string; correct?: true } = { text: answer.text };
+      if (
+        this.state.card.type === CardType.CHOOSE_OPTIONS &&
+        "correct" in answer
+      ) {
+        ans.correct = true;
+      }
+      return ans;
+    });
     const htmlCard = {
       ...card,
       card: {
+        answers,
         comment: this.getHtmlEditorContent(commentEditorState),
         question: this.getHtmlEditorContent(questionEditorState)
       }
@@ -138,9 +151,16 @@ class CreateCardPage extends React.Component<State> {
     });
   };
 
-  // public removeAnswer = () => {};
-  // public updateAnswer = () => {};
-  // public addAnswer = () => {};
+  public updateAnswers = (answers: Array<{ text: string; correct?: true }>) => {
+    this.setState(({ card }: State) => {
+      return {
+        card: {
+          ...card,
+          card: { ...card.card, answers }
+        }
+      };
+    });
+  };
 
   public render() {
     const {
@@ -163,6 +183,7 @@ class CreateCardPage extends React.Component<State> {
               <h4>Language:</h4>
               <Select
                 name="card-language"
+                value={card.lang}
                 options={cardLanguageOptions}
                 onSelectOption={this.changeCardLanguage}
               />
@@ -177,6 +198,7 @@ class CreateCardPage extends React.Component<State> {
               <h4>Card type:</h4>
               <Select
                 name="card-type"
+                value={card.type}
                 options={cardTypeOptions}
                 onSelectOption={this.changeCardType}
               />
@@ -196,13 +218,16 @@ class CreateCardPage extends React.Component<State> {
               {card.type !== CardType.INFO && (
                 <>
                   <h4>Answers:</h4>
-                  <CardAnswers answers={card.answers} />
+                  <CardAnswers
+                    cardType={card.type}
+                    answers={card.card.answers}
+                    updateAnswers={this.updateAnswers}
+                  />
                 </>
               )}
-
-              <button onClick={this.showResult}>Show data</button>
             </div>
             <div className="editor section">
+              <button onClick={this.showResult}>Show data</button>
               {isPreviewVisible ? (
                 <CardPreview card={card} />
               ) : (

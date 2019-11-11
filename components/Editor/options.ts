@@ -1,4 +1,4 @@
-export const options = {
+const options = {
   inline: {
     inDropdown: false,
     options: ["bold", "italic", "underline", "monospace"]
@@ -19,3 +19,5 @@ export const options = {
     options: ["left", "center", "right", "justify"]
   }
 };
+
+export default options;

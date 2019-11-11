@@ -41,9 +41,9 @@ interface State {
 class CreateCardPage extends React.Component<State> {
   public state = {
     card: EMPTY_CARD,
-    commentEditorState: EditorState.createEmpty(),
+    commentEditorState: undefined,
     isPreviewVisible: false,
-    questionEditorState: EditorState.createEmpty(),
+    questionEditorState: undefined,
     repoTags: []
   };
 
@@ -117,8 +117,10 @@ class CreateCardPage extends React.Component<State> {
     });
   };
 
-  public getHtmlEditorContent = (editorState: EditorState) =>
-    draftToHtml(convertToRaw(editorState.getCurrentContent()));
+  public getHtmlEditorContent = (editorState: EditorState | void) =>
+    editorState
+      ? draftToHtml(convertToRaw(editorState.getCurrentContent()))
+      : "<p></p>";
 
   public showResult = () => {
     const { commentEditorState, questionEditorState, card } = this.state;
@@ -140,6 +142,7 @@ class CreateCardPage extends React.Component<State> {
         question: this.getHtmlEditorContent(questionEditorState)
       }
     };
+    // tslint:disable no-console
     console.log(JSON.stringify(htmlCard));
   };
 

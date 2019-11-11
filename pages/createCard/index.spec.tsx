@@ -1,5 +1,9 @@
+/**
+ * @jest-environment jsdom
+ */
 import axios from "axios";
 import { shallow, ShallowWrapper } from "enzyme";
+import htmlToDraft from "html-to-draftjs";
 import * as React from "react";
 import CardEditor from "~/components/Editor";
 import Header from "~/components/Header";
@@ -7,6 +11,7 @@ import Select from "~/components/Select";
 import Typeahead, { TypeaheadOption } from "~/components/Typeahead";
 import { CardType, RepoTags } from "~/typings/common";
 
+import { ContentState, EditorState } from "draft-js";
 import CardPreview from "../updateCards/components/CardPreview";
 import CardAnswers from "./CardAnswers";
 import CreateCardPage from "./index";
@@ -21,6 +26,7 @@ describe("filterCards page", () => {
   let page: ShallowWrapper;
   let getSpy: jest.SpyInstance<any>;
   let fetchedTags: RepoTags;
+  let instance: CreateCardPage;
   const props = {
     card: {
       card: {
@@ -44,6 +50,7 @@ describe("filterCards page", () => {
     const res = { data: { tags: fetchedTags } };
     getSpy.mockReturnValue(Promise.resolve(res));
     page = shallow(<CreateCardPage {...props} />);
+    instance = page.instance() as CreateCardPage;
   });
 
   it("renders Header", () => {
@@ -69,7 +76,7 @@ describe("filterCards page", () => {
   });
 
   it("does not render CardAnswers for 'info' card type", () => {
-    (page.instance() as CreateCardPage).changeCardType(CardType.INFO);
+    instance.changeCardType(CardType.INFO);
 
     expect(page.find(CardAnswers).exists()).toBe(false);
   });
@@ -77,7 +84,7 @@ describe("filterCards page", () => {
   describe("changeCardType", () => {
     it("changes card type", () => {
       expect((page.state("card") as any).type).toBe(CardType.CHOOSE_SEQUENCE);
-      (page.instance() as CreateCardPage).changeCardType(CardType.INFO);
+      instance.changeCardType(CardType.INFO);
       expect((page.state("card") as any).type).toBe(CardType.INFO);
     });
   });
@@ -85,21 +92,21 @@ describe("filterCards page", () => {
   describe("changeCardLanguage", () => {
     it("changes card language", () => {
       expect((page.state("card") as any).lang).toBe("en");
-      (page.instance() as CreateCardPage).changeCardLanguage("ru");
+      instance.changeCardLanguage("ru");
       expect((page.state("card") as any).lang).toBe("ru");
     });
   });
 
   describe("getHtmlEditorContent", () => {
     it("returns empty html if no content", () => {
-      const html = (page.instance() as CreateCardPage).getHtmlEditorContent();
+      const html = instance.getHtmlEditorContent();
       expect(html).toBe("<p></p>");
     });
   });
 
   describe("showPreview", () => {
     it("shows card preview", () => {
-      (page.instance() as CreateCardPage).showPreview();
+      instance.showPreview();
 
       expect(page.state("isPreviewVisible")).toBe(true);
       expect(page.find(CardPreview).exists()).toBe(true);
@@ -111,7 +118,7 @@ describe("filterCards page", () => {
       expect(page.find(Typeahead).prop("options")).toHaveLength(3);
       const newTag = [{ id: "tag2", label: "tag2" }];
 
-      (page.instance() as CreateCardPage).changeTagSelection(newTag);
+      instance.changeTagSelection(newTag);
 
       expect((page.state("card") as any).tags).toMatchObject(["tag2"]);
     });
@@ -122,7 +129,7 @@ describe("filterCards page", () => {
       expect(page.find(CardAnswers).prop("answers")).toHaveLength(1);
       const answers = [{ text: "answer1" }, { text: "answer2" }];
 
-      (page.instance() as CreateCardPage).updateAnswers(answers);
+      instance.updateAnswers(answers);
 
       expect((page.state("card") as any).card.answers).toMatchObject(answers);
     });
@@ -130,18 +137,28 @@ describe("filterCards page", () => {
 
   describe("getCardSchema", () => {
     it("returns correct JSON card schema", () => {
-      (page.instance() as CreateCardPage).updateAnswers([
+      instance.updateAnswers([
         { text: "answer1" },
         { text: "answer2", correct: true }
       ]);
-      (page.instance() as CreateCardPage).changeCardType(
-        CardType.CHOOSE_OPTIONS
-      );
-      const schema = (page.instance() as CreateCardPage).getCardSchema();
+      instance.changeCardType(CardType.CHOOSE_OPTIONS);
+      const schema = instance.getCardSchema();
       const expectedJSON =
-        '{"card":{"answers":[{"text":"answer1"},{"text":"answer2","correct":true}],"comment":"<p></p>","question":"<p></p>"},"lang":"ru","tags":["tag2"],"type":"choose_options"}';
+        '{"card":{"answers":[{"text":"answer1"},{"text":"answer2","correct":true}],"comment":"<p></p>\\n","question":"<p></p>\\n"},"lang":"ru","tags":["tag2"],"type":"choose_options"}';
 
       expect(schema).toBe(expectedJSON);
+    });
+  });
+
+  describe("getEditTemplateHandler", () => {
+    it("updates card with correct html", () => {
+      const html = "<p>Question</p>\n";
+      const { contentBlocks } = htmlToDraft(html);
+      const contentState = ContentState.createFromBlockArray(contentBlocks);
+      const editorState = EditorState.createWithContent(contentState);
+      instance.getEditTemplateHandler("question")(editorState);
+
+      expect((page.state() as any).card.card.question).toBe(html);
     });
   });
 });

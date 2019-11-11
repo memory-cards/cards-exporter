@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ContentState, convertToRaw, EditorState } from "draft-js";
-import draftToHtml from "draftjs-to-html";
+import * as draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
 import * as React from "react";
 import { CardType } from "~/typings/common";

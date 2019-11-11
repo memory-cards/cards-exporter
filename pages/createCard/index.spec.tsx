@@ -7,7 +7,6 @@ import Select from "~/components/Select";
 import Typeahead, { TypeaheadOption } from "~/components/Typeahead";
 import { CardType, RepoTags } from "~/typings/common";
 
-import { EditorState } from "draft-js";
 import CardPreview from "../updateCards/components/CardPreview";
 import CardAnswers from "./CardAnswers";
 import CreateCardPage from "./index";
@@ -59,7 +58,6 @@ describe("filterCards page", () => {
     const typeahead = page.find(Typeahead);
 
     expect(typeahead.exists()).toBe(true);
-    // expect(typeahead.prop("selectedOptions")).toMatchObject([]);
   });
 
   it("renders CardEditor for question and comment", () => {

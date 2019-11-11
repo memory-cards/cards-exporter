@@ -41,14 +41,6 @@ class UpdateCardPage extends React.Component<State> {
     this.setState(() => ({ selectedCard }));
   };
 
-  public getQuestion = () => {
-    const { selectedCard } = this.state;
-    if (selectedCard) {
-      return ((selectedCard as any) as ICardDefinition).card.question;
-    }
-    return "no textl";
-  };
-
   public render() {
     const { cards, selectedCard } = this.state;
 

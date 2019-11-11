@@ -33,8 +33,8 @@ type MainCardFieldType = "question" | "comment";
 interface State {
   repoTags: TypeaheadOption[];
   card: ICardDefinition;
-  questionEditorState: EditorState;
-  commentEditorState: EditorState;
+  questionEditorState?: EditorState;
+  commentEditorState?: EditorState;
   isPreviewVisible: boolean;
 }
 
@@ -122,7 +122,13 @@ class CreateCardPage extends React.Component<State> {
       ? draftToHtml(convertToRaw(editorState.getCurrentContent()))
       : "<p></p>";
 
-  public showResult = () => {
+  public showCardSchemaResult = () => {
+    const schema = this.getCardSchema();
+    // tslint:disable no-console
+    console.log(schema);
+  };
+
+  public getCardSchema = () => {
     const { commentEditorState, questionEditorState, card } = this.state;
     const answers = card.card.answers.map(answer => {
       const ans: { text: string; correct?: true } = { text: answer.text };
@@ -142,8 +148,8 @@ class CreateCardPage extends React.Component<State> {
         question: this.getHtmlEditorContent(questionEditorState)
       }
     };
-    // tslint:disable no-console
-    console.log(JSON.stringify(htmlCard));
+
+    return JSON.stringify(htmlCard);
   };
 
   public changeTagSelection = (selected: TypeaheadOption[]) => {
@@ -155,14 +161,12 @@ class CreateCardPage extends React.Component<State> {
   };
 
   public updateAnswers = (answers: Array<{ text: string; correct?: true }>) => {
-    this.setState(({ card }: State) => {
-      return {
-        card: {
-          ...card,
-          card: { ...card.card, answers }
-        }
-      };
-    });
+    this.setState(({ card }: State) => ({
+      card: {
+        ...card,
+        card: { ...card.card, answers }
+      }
+    }));
   };
 
   public render() {
@@ -230,7 +234,7 @@ class CreateCardPage extends React.Component<State> {
               )}
             </div>
             <div className="editor section">
-              <button onClick={this.showResult}>Show data</button>
+              <button onClick={this.showCardSchemaResult}>Show data</button>
               {isPreviewVisible ? (
                 <CardPreview card={card} />
               ) : (

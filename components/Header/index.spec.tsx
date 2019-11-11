@@ -13,6 +13,7 @@ const urls = [
   "/api/cards/update",
   "/api/cards/tags",
   "/filterCards",
+  "/createCard",
   "/updateCards"
 ];
 

@@ -3,7 +3,7 @@
 exports[`With Snapshot Testing CardsList 1`] = `
 <ul>
   <li
-    className="card selected"
+    className="card-item selected"
     onClick={[Function]}
   >
     <div>
@@ -19,7 +19,7 @@ exports[`With Snapshot Testing CardsList 1`] = `
     </div>
   </li>
   <li
-    className="card"
+    className="card-item"
     onClick={[Function]}
   >
     <div>

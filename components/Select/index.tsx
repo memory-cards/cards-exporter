@@ -15,7 +15,9 @@ const Select = ({ options, onSelectOption, name, value }: Props) => {
   return (
     <select name={name} onChange={onChange}>
       {options.map(option => (
-        <option selected={value === option}>{option}</option>
+        <option key={option} selected={value === option}>
+          {option}
+        </option>
       ))}
     </select>
   );

@@ -4,6 +4,7 @@
 import { shallow, ShallowWrapper } from "enzyme";
 import * as React from "react";
 import * as TestRenderer from "react-test-renderer";
+import { ICardDefinition } from "~/typings/ICardDefinition";
 
 import "../Card/windowMock";
 
@@ -25,10 +26,12 @@ const card = {
 
 describe("With Enzyme", () => {
   let component: ShallowWrapper;
+  let selectCard: (selectedCard: ICardDefinition) => void;
 
   beforeEach(() => {
+    selectCard = jest.fn();
     component = shallow(
-      <Card card={card} selectCard={jest.fn()} isSelected={true} />
+      <Card card={card} selectCard={selectCard} isSelected={true} />
     );
   });
 
@@ -38,9 +41,8 @@ describe("With Enzyme", () => {
     });
 
     it("has correct classname for not selected card", () => {
-      component = shallow(
-        <Card card={card} selectCard={jest.fn()} isSelected={false} />
-      );
+      component.setProps({ isSelected: false });
+
       expect(component.find(".selected").exists()).toBe(false);
     });
 
@@ -73,7 +75,7 @@ describe("With Enzyme", () => {
       };
 
       component = shallow(
-        <Card card={newCard} selectCard={jest.fn()} isSelected={false} />
+        <Card card={newCard} selectCard={selectCard} isSelected={false} />
       );
 
       const cardQuestionLabel = component
@@ -99,7 +101,7 @@ describe("With Enzyme", () => {
       };
 
       component = shallow(
-        <Card card={newCard} selectCard={jest.fn()} isSelected={false} />
+        <Card card={newCard} selectCard={selectCard} isSelected={false} />
       );
 
       const cardQuestionLabel = component
@@ -108,6 +110,13 @@ describe("With Enzyme", () => {
         .text();
 
       expect(cardQuestionLabel).toBe(newCardQuestion);
+    });
+
+    it("click on card calls selectCard method", () => {
+      component.find("li").simulate("click");
+
+      expect(selectCard).toHaveBeenCalled();
+      expect(selectCard).toHaveBeenCalledWith(card);
     });
   });
 });

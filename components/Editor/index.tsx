@@ -20,9 +20,7 @@ const CardEditor = (props: Props) => {
 
   const { editorState, editTemplate } = props;
 
-  if (!editorState) {
-    return null;
-  }
+  if (!editorState) return null;
 
   return (
     <Editor

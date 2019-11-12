@@ -19,17 +19,16 @@ interface Props {
 
 const CardAnswers = ({ answers, updateAnswers, cardType }: Props) => {
   const changeAnswer = (ev: React.ChangeEvent<HTMLInputElement>) => {
-    const text = ev.target.value;
+    const { name, value } = ev.target;
     const updatedAnswers = answers.map(answer => {
-      return answer.id !== ev.target.name ? answer : { ...answer, text };
+      return answer.id !== name ? answer : { ...answer, text: value };
     });
     updateAnswers(updatedAnswers);
   };
 
   const removeAnswer = (ev: React.MouseEvent<HTMLButtonElement>) => {
-    const updatedAnswers = answers.filter(
-      answer => answer.id !== (ev.target as HTMLInputElement).name
-    );
+    const name = (ev.target as HTMLInputElement).name;
+    const updatedAnswers = answers.filter(({ id }) => id !== name);
     updateAnswers(updatedAnswers);
   };
 
@@ -42,9 +41,10 @@ const CardAnswers = ({ answers, updateAnswers, cardType }: Props) => {
   };
 
   const selectCorrectAnswer = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    const { checked, id } = ev.target;
     const updatedAnswers = answers.map(answer => {
-      if (answer.id === ev.target.id) {
-        if (ev.target.checked) {
+      if (answer.id === id) {
+        if (checked) {
           answer.correct = true;
         } else {
           delete answer.correct;

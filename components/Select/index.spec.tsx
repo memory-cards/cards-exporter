@@ -9,6 +9,17 @@ describe("with Enzyme", () => {
   let component: ShallowWrapper;
   const onSelectOption = jest.fn();
 
+  beforeEach(() => {
+    component = shallow(
+      <Select
+        name="name"
+        value="4"
+        options={MOCKED_OPTIONS}
+        onSelectOption={onSelectOption}
+      />
+    );
+  });
+
   it("renders select tag with options", () => {
     component = shallow(
       <Select
@@ -22,15 +33,6 @@ describe("with Enzyme", () => {
   });
 
   it("renders select tag with preselected value", () => {
-    component = shallow(
-      <Select
-        name="name"
-        value="4"
-        options={MOCKED_OPTIONS}
-        onSelectOption={onSelectOption}
-      />
-    );
-
     expect(
       component
         .find("option")
@@ -40,15 +42,6 @@ describe("with Enzyme", () => {
   });
 
   it("calls onSelectOption callback with correct value", () => {
-    component = shallow(
-      <Select
-        name="name"
-        value="4"
-        options={MOCKED_OPTIONS}
-        onSelectOption={onSelectOption}
-      />
-    );
-
     const select = component.find("select");
     const onChangeArguments = ({
       target: { value: "value" }

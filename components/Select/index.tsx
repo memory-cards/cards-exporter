@@ -8,9 +8,8 @@ interface Props {
 }
 
 const Select = ({ options, onSelectOption, name, value }: Props) => {
-  const onChange = (ev: React.ChangeEvent<HTMLSelectElement>) => {
+  const onChange = (ev: React.ChangeEvent<HTMLSelectElement>) =>
     onSelectOption(ev.target.value);
-  };
 
   return (
     <select name={name} onChange={onChange}>

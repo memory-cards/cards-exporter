@@ -14,6 +14,12 @@ describe("With Enzyme", () => {
 
   beforeEach(() => {
     editTemplate = jest.fn();
+    component = shallow(
+      <CardEditor
+        editTemplate={editTemplate}
+        editorState={EditorState.createEmpty()}
+      />
+    );
   });
 
   afterEach(() => {
@@ -27,22 +33,10 @@ describe("With Enzyme", () => {
     });
 
     it("renders Editor if has editorState", () => {
-      component = shallow(
-        <CardEditor
-          editTemplate={editTemplate}
-          editorState={EditorState.createEmpty()}
-        />
-      );
       expect(component.find(Editor).exists()).toBe(true);
     });
 
     it("hides toolbar", () => {
-      component = shallow(
-        <CardEditor
-          editTemplate={editTemplate}
-          editorState={EditorState.createEmpty()}
-        />
-      );
       const onBlur: () => void = component.prop("onBlur");
 
       onBlur();
@@ -50,12 +44,6 @@ describe("With Enzyme", () => {
     });
 
     it("shows toolbar", () => {
-      component = shallow(
-        <CardEditor
-          editTemplate={editTemplate}
-          editorState={EditorState.createEmpty()}
-        />
-      );
       const onFocus: () => void = component.prop("onFocus");
 
       onFocus();

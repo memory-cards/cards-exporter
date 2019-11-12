@@ -8,18 +8,9 @@ describe("With Enzyme", () => {
   let component: ShallowWrapper;
   let updateAnswers: any;
   const answers = [
-    {
-      id: "id1",
-      text: "text1"
-    },
-    {
-      id: "id2",
-      text: "text2"
-    },
-    {
-      id: "id3",
-      text: "text3"
-    }
+    { id: "id1", text: "text1" },
+    { id: "id2", text: "text2" },
+    { id: "id3", text: "text3" }
   ];
 
   beforeEach(() => {

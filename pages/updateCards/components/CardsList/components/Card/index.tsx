@@ -10,9 +10,7 @@ interface Props {
 }
 
 const Card = ({ card, selectCard, isSelected }: Props) => {
-  const onClick = () => {
-    selectCard(card);
-  };
+  const onClick = () => selectCard(card);
 
   const getShortCardQuestion = () => {
     const element = window.document.createElement("div");

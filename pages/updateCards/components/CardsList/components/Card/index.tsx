@@ -10,9 +10,7 @@ interface Props {
 }
 
 const Card = ({ card, selectCard, isSelected }: Props) => {
-  const onClick = () => {
-    selectCard(card);
-  };
+  const onClick = () => selectCard(card);
 
   const getShortCardQuestion = () => {
     const element = window.document.createElement("div");
@@ -26,7 +24,10 @@ const Card = ({ card, selectCard, isSelected }: Props) => {
   };
 
   return (
-    <li className={isSelected ? "card selected" : "card"} onClick={onClick}>
+    <li
+      className={isSelected ? "card-item selected" : "card-item"}
+      onClick={onClick}
+    >
       <div>{getShortCardQuestion()}</div>
       <br />
       <div>

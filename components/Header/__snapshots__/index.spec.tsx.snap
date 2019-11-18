@@ -50,6 +50,13 @@ exports[`With Snapshot Testing Header 1`] = `
     </a>
     <a
       className=""
+      href="/createCard"
+      onClick={[Function]}
+    >
+      Create cards page
+    </a>
+    <a
+      className=""
       href="/updateCards"
       onClick={[Function]}
     >

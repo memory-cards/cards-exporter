@@ -5,5 +5,6 @@ export interface ICardDefinition {
   card: {
     question: string;
     comment?: string;
+    answers?: Array<{ text: string; correct?: true }>;
   };
 }

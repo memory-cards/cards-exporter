@@ -2,7 +2,7 @@
 
 exports[`With Snapshot Testing IndexPage shows "Cards Exporter" 1`] = `
 <li
-  className="card"
+  className="card-item"
   onClick={[Function]}
 >
   <div>

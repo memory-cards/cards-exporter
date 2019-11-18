@@ -1,6 +1,7 @@
 /* tslint:disable no-var-requires no-submodule-imports */
 import * as React from "react";
 import Frame from "react-frame-component";
+import { CardType } from "~/typings/common";
 import { ICardDefinition } from "~/typings/ICardDefinition";
 
 import "./styles.scss";
@@ -8,13 +9,13 @@ import "./styles.scss";
 const cardProcessor = (card: ICardDefinition | null) => {
   if (card) {
     switch (card.type) {
-      case "choose_sequence":
+      case CardType.CHOOSE_SEQUENCE:
         return require(`card-types/types/choose_sequence`)(card);
-      case "choose_options":
+      case CardType.CHOOSE_OPTIONS:
         return require(`card-types/types/choose_options`)(card);
-      case "order_items":
+      case CardType.ORDER_ITEMS:
         return require(`card-types/types/order_items`)(card);
-      case "info":
+      case CardType.INFO:
         return require(`card-types/types/info`)(card);
     }
   }
@@ -44,23 +45,33 @@ class CardPreview extends React.Component<Props, State> {
 
   public showFrontTimer: NodeJS.Timeout | null = null;
 
-  public componentDidUpdate = (props: Props) => {
-    if (this.props.card !== props.card) {
-      this.setState(() => ({ isScriptLoading: true }));
-      this.resetStore();
-      this.clearShowFrontTimer();
-      this.setState(() => {
-        const processedCard = cardProcessor(this.props.card);
-        this.showFront(processedCard.front);
-
-        return {
-          processedCard,
-          /* tslint:disable object-literal-sort-keys */
-          isBackVisible: false,
-          previousCardBack: processedCard.back
-        };
-      });
+  public componentDidMount() {
+    if (this.props.card) {
+      this.executeCardPreview(this.props.card);
     }
+  }
+
+  public componentDidUpdate = (props: Props) => {
+    if (this.props.card && this.props.card !== props.card) {
+      this.executeCardPreview(this.props.card);
+    }
+  };
+
+  public executeCardPreview = (card: ICardDefinition) => {
+    this.setState(() => ({ isScriptLoading: true }));
+    this.resetStore();
+    this.clearShowFrontTimer();
+    this.setState(() => {
+      const processedCard = cardProcessor(card);
+      this.showFront(processedCard.front);
+
+      return {
+        processedCard,
+        /* tslint:disable object-literal-sort-keys */
+        isBackVisible: false,
+        previousCardBack: processedCard.back
+      };
+    });
   };
 
   public clearShowFrontTimer = () => {

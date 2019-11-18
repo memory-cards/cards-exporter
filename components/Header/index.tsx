@@ -3,10 +3,13 @@ import Link from "next/link";
 import { withRouter, WithRouterProps } from "next/router";
 import * as React from "react";
 
+import "bootstrap/dist/css/bootstrap.min.css";
+
 import "./styles.scss";
 
 const pages = [
   { href: "/filterCards", label: "Filter cards page" },
+  { href: "/createCard", label: "Create cards page" },
   { href: "/updateCards", label: "Update cards page" }
 ];
 

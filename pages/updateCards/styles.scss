@@ -1,7 +1,3 @@
-.update-page {
-  background-color: lightgrey;
-}
-
 .section-container {
   display: flex;
 }
@@ -9,17 +5,17 @@
 .cards-list {
   margin: 0 10px;
   width: 300px;
-  height: calc(100vh - 60px);
+  height: calc(100vh - 42px);
   overflow-y: auto;
 
   ul {
     margin: 0;
     padding-left: 0;
+    padding-top: 3px;
     list-style-type: none;
   }
 }
 
 .section {
-  flex: 1;
-  margin: 20px;
+  margin: 20px auto;
 }

@@ -1,15 +1,12 @@
 #frame {
   background-color: white;
-  width: 500px;
+  width: 600px;
   height: 100%;
-  border-width: 0;
-  border-radius: 3px;
-  box-shadow: 3px 3px 3px darkslategray;
-  border-left: 3px solid transparent;
+  border: 1px solid #dee2e6;
   transition: all 0.5s;
+  border-radius: 3px;
 
   &.invisible {
     visibility: hidden;
-    transition: all 0.5s;
   }
 }

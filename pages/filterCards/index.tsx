@@ -93,9 +93,7 @@ class FilterCardsPage extends React.Component<State> {
                   checked={selectedTags[tagName]}
                 />
                 <span>{tagName}</span>
-                <span className="badge badge-primary badge-pill">
-                  {tags[tagName]}
-                </span>
+                <span>{tags[tagName]}</span>
               </li>
             ))}
           </ul>

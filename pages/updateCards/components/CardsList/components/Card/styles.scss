@@ -4,7 +4,7 @@
   padding: 5px;
   min-height: 40px;
   border-radius: 6px;
-  box-shadow: 3px 3px 3px darkslategray;
+  box-shadow: 3px 3px 5px darkslategrey, -1px -1px 5px darkslategrey;
   border-left: 3px solid transparent;
 
   &:last-child {
@@ -18,7 +18,8 @@
   }
 
   &.selected {
-    border-left-color: darkred;
+    border-left-color: #007bff;
+    box-shadow: 3px 3px 5px darkslategrey, -1px 0 5px #007bff;
   }
 
   .tag {

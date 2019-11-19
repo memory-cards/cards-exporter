@@ -47,7 +47,7 @@ describe("With Enzyme", () => {
     });
 
     it("renders tags labels", () => {
-      const tags = component.find("span.tag");
+      const tags = component.find("span.badge");
       expect(tags).toHaveLength(card.tags.length);
       tags.forEach((tag, index) => expect(tag.text()).toBe(card.tags[index]));
     });

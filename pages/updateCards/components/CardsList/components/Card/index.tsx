@@ -32,7 +32,7 @@ const Card = ({ card, selectCard, isSelected }: Props) => {
       <br />
       <div>
         {card.tags.map(tag => (
-          <span key={tag} className="badge badge-primary mx-1">
+          <span key={tag} className="badge badge-info mx-1">
             {tag}
           </span>
         ))}

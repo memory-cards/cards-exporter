@@ -2,69 +2,98 @@
 
 exports[`With Snapshot Testing IndexPage shows "Cards Exporter" 1`] = `
 <div>
-  <div
-    className="nav"
+  <ul
+    className="nav nav-tabs"
   >
-    <div
-      className="navbar"
+    <li
+      className="nav-item"
     >
       <a
+        className="nav-link"
         href="/api/date"
         onClick={[Function]}
       >
-        Date info
+        Date
       </a>
+    </li>
+    <li
+      className="nav-item"
+    >
       <a
+        className="nav-link"
         href="/api/cards/list"
         onClick={[Function]}
       >
-        Cards info
+        Cards
       </a>
+    </li>
+    <li
+      className="nav-item"
+    >
       <a
+        className="nav-link"
         href="/api/cards/deck"
         onClick={[Function]}
       >
-        Deck info
+        Deck
       </a>
+    </li>
+    <li
+      className="nav-item"
+    >
       <a
+        className="nav-link"
         href="/api/cards/update"
         onClick={[Function]}
       >
-        Last update info
+        Last update
       </a>
+    </li>
+    <li
+      className="nav-item"
+    >
       <a
+        className="nav-link"
         href="/api/cards/tags"
         onClick={[Function]}
       >
-        Tags info
+        Tags
       </a>
-    </div>
-    <div
-      className="navbar"
+    </li>
+    <li
+      className="nav-item"
     >
       <a
-        className=""
+        className="nav-link"
         href="/filterCards"
         onClick={[Function]}
       >
-        Filter cards page
+        Filter cards
       </a>
+    </li>
+    <li
+      className="nav-item"
+    >
       <a
-        className=""
+        className="nav-link"
         href="/createCard"
         onClick={[Function]}
       >
-        Create cards page
+        Create cards
       </a>
+    </li>
+    <li
+      className="nav-item"
+    >
       <a
-        className=""
+        className="nav-link"
         href="/updateCards"
         onClick={[Function]}
       >
-        Update cards page
+        Update cards
       </a>
-    </div>
-  </div>
+    </li>
+  </ul>
   <h1>
     Cards Exporter
   </h1>

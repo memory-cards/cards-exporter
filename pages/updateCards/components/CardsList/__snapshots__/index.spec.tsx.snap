@@ -12,7 +12,7 @@ exports[`With Snapshot Testing CardsList 1`] = `
     <br />
     <div>
       <span
-        className="tag"
+        className="badge badge-info mx-1"
       >
         tag1
       </span>
@@ -28,7 +28,7 @@ exports[`With Snapshot Testing CardsList 1`] = `
     <br />
     <div>
       <span
-        className="tag"
+        className="badge badge-info mx-1"
       >
         tag2
       </span>

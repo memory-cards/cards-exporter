@@ -182,64 +182,103 @@ class CreateCardPage extends React.Component<State> {
     const selectedTags = card.tags.map(tag => ({ id: tag, label: tag }));
 
     return (
-      <div className="create-card-page">
+      <div>
         <Header />
-        <div className="create-card-page-container">
-          <h2>Card page:</h2>
-          <div className="section-container">
-            <div className="section">
-              <h4>Language:</h4>
-              <Select
-                name="card-language"
-                value={card.lang}
-                options={cardLanguageOptions}
-                onSelectOption={this.changeCardLanguage}
-              />
+        <div className="container">
+          <h3 className="my-3">Card page:</h3>
+          <div className="row">
+            <div className="col-6">
+              <form>
+                <div className="form-group row">
+                  <label
+                    htmlFor="card-language"
+                    className="col-sm-3 col-form-label"
+                  >
+                    Language
+                  </label>
+                  <div className="col-sm-9">
+                    <Select
+                      name="card-language"
+                      value={card.lang}
+                      options={cardLanguageOptions}
+                      onSelectOption={this.changeCardLanguage}
+                    />
+                  </div>
+                </div>
 
-              <h4>Tags:</h4>
-              <Typeahead
-                options={repoTags}
-                selectedOptions={selectedTags}
-                onChange={this.changeTagSelection}
-              />
+                <div className="form-group row">
+                  <label
+                    htmlFor="card-tags"
+                    className="col-sm-3 col-form-label"
+                  >
+                    Tags
+                  </label>
+                  <div className="col-sm-9">
+                    <Typeahead
+                      options={repoTags}
+                      selectedOptions={selectedTags}
+                      onChange={this.changeTagSelection}
+                    />
+                  </div>
+                </div>
 
-              <h4>Card type:</h4>
-              <Select
-                name="card-type"
-                value={card.type}
-                options={cardTypeOptions}
-                onSelectOption={this.changeCardType}
-              />
+                <div className="form-group row">
+                  <label
+                    htmlFor="card-type"
+                    className="col-sm-3 col-form-label"
+                  >
+                    Card type
+                  </label>
+                  <div className="col-sm-9">
+                    <Select
+                      name="card-type"
+                      value={card.type}
+                      options={cardTypeOptions}
+                      onSelectOption={this.changeCardType}
+                    />
+                  </div>
+                </div>
 
-              <h4>Question:</h4>
-              <CardEditor
-                editorState={questionEditorState}
-                editTemplate={this.getEditTemplateHandler("question")}
-              />
-
-              <h4>Comment:</h4>
-              <CardEditor
-                editorState={commentEditorState}
-                editTemplate={this.getEditTemplateHandler("comment")}
-              />
-
-              {card.type !== CardType.INFO && (
-                <>
-                  <h4>Answers:</h4>
-                  <CardAnswers
-                    cardType={card.type}
-                    answers={card.card.answers}
-                    updateAnswers={this.updateAnswers}
+                <div className="form-group">
+                  <label htmlFor="card-question">Question</label>
+                  <CardEditor
+                    editorState={questionEditorState}
+                    editTemplate={this.getEditTemplateHandler("question")}
                   />
-                </>
-              )}
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="card-comment">Comment</label>
+                  <CardEditor
+                    editorState={commentEditorState}
+                    editTemplate={this.getEditTemplateHandler("comment")}
+                  />
+                </div>
+
+                {card.type !== CardType.INFO && (
+                  <div className="form-group">
+                    <CardAnswers
+                      cardType={card.type}
+                      answers={card.card.answers}
+                      updateAnswers={this.updateAnswers}
+                    />
+                  </div>
+                )}
+              </form>
+              <button
+                className="btn btn-success"
+                onClick={this.showCardSchemaResult}
+              >
+                Show data
+              </button>
             </div>
-            <div className="editor section">
-              <button onClick={this.showCardSchemaResult}>Show data</button>
+            <div className="col-6">
               {isPreviewVisible ? (
                 <CardPreview card={card} />
               ) : (
-                <button onClick={this.showPreview}>Show preview</button>
+                <button className="btn btn-success" onClick={this.showPreview}>
+                  Show preview
+                </button>
               )}
             </div>
           </div>

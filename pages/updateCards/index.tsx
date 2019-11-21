@@ -45,7 +45,7 @@ class UpdateCardPage extends React.Component<State> {
     const { cards, selectedCard } = this.state;
 
     return (
-      <div className="update-page">
+      <>
         <Header />
         <div className="section-container">
           <div className="cards-list">
@@ -55,14 +55,13 @@ class UpdateCardPage extends React.Component<State> {
               selectedCard={selectedCard}
             />
           </div>
-          <div className="section" />
           {!!cards.length && (
             <div className="section">
               <CardPreview card={selectedCard} />
             </div>
           )}
         </div>
-      </div>
+      </>
     );
   }
 }

@@ -8,46 +8,46 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.scss";
 
 const pages = [
-  { href: "/filterCards", label: "Filter cards page" },
-  { href: "/createCard", label: "Create cards page" },
-  { href: "/updateCards", label: "Update cards page" }
+  { href: "/filterCards", label: "Filter cards" },
+  { href: "/createCard", label: "Create cards" },
+  { href: "/updateCards", label: "Update cards" }
 ];
 
 const infoLinks = [
-  { href: "/api/date", label: "Date info" },
-  { href: "/api/cards/list", label: "Cards info" },
-  { href: "/api/cards/deck", label: "Deck info" },
-  { href: "/api/cards/update", label: "Last update info" },
-  { href: "/api/cards/tags", label: "Tags info" }
+  { href: "/api/date", label: "Date" },
+  { href: "/api/cards/list", label: "Cards" },
+  { href: "/api/cards/deck", label: "Deck" },
+  { href: "/api/cards/update", label: "Last update" },
+  { href: "/api/cards/tags", label: "Tags" }
 ];
 
 const Header = (props: WithRouterProps) => {
   return (
-    <div className="nav">
-      <div className="navbar">
-        {infoLinks.map(({ href, label }) => (
+    <ul className="nav nav-tabs">
+      {infoLinks.map(({ href, label }) => (
+        <li className="nav-item">
           <Link key={href} href={href}>
-            <a>{label}</a>
+            <a className="nav-link">{label}</a>
           </Link>
-        ))}
-      </div>
+        </li>
+      ))}
 
-      <div className="navbar">
-        {pages.map(({ href, label }) => (
+      {pages.map(({ href, label }) => (
+        <li className="nav-item">
           <Link key={href} href={href}>
             <a
               className={
                 props && props.router && href === props.router.pathname
-                  ? "active"
-                  : ""
+                  ? "nav-link active"
+                  : "nav-link"
               }
             >
               {label}
             </a>
           </Link>
-        ))}
-      </div>
-    </div>
+        </li>
+      ))}
+    </ul>
   );
 };
 

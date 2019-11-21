@@ -76,28 +76,45 @@ class FilterCardsPage extends React.Component<State> {
     );
 
     return (
-      <div className="filter-page">
+      <>
         <Header />
         <div className="filter-container">
-          <h2>Select required tags:</h2>
-          <ul>
+          <h2 className="p-3">Select required tags:</h2>
+          <ul className="list-group">
             {tagsArray.map((tagName: string) => (
-              <li key={tagName} onClick={this.updateSelectedTags}>
+              <li
+                className="list-group-item d-flex list-group-item-action justify-content-between align-items-center"
+                key={tagName}
+                onClick={this.updateSelectedTags}
+              >
                 <input
                   type="checkbox"
-                  id={tagName}
                   value={tagName}
                   checked={selectedTags[tagName]}
                 />
-                <label htmlFor={tagName}>{tagName}</label>
-                {` - ${tags[tagName]}`}
+                <span>{tagName}</span>
+                <span>{tags[tagName]}</span>
               </li>
             ))}
           </ul>
-          <button onClick={this.clearSelectedTags}>Clear all</button>
-          <button onClick={this.getDeck}>Get deck</button>
+          <div>
+            <button
+              className="btn btn-primary m-3"
+              type="button"
+              onClick={this.clearSelectedTags}
+            >
+              Clear all
+            </button>
+            <button
+              className="btn btn-success m-3"
+              type="button"
+              onClick={this.getDeck}
+            >
+              Get deck
+            </button>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 }

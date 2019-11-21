@@ -12,7 +12,7 @@ const Select = ({ options, onSelectOption, name, value }: Props) => {
     onSelectOption(ev.target.value);
 
   return (
-    <select name={name} onChange={onChange}>
+    <select name={name} onChange={onChange} className="form-control">
       {options.map(option => (
         <option key={option} selected={value === option}>
           {option}

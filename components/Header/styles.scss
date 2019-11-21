@@ -3,32 +3,3 @@ body {
 
   font-family: "Arimo", sans-serif;
 }
-
-.nav {
-  height: 40px;
-  display: flex;
-  justify-content: space-between;
-  background-color: lightgrey;
-  margin-bottom: 20px;
-
-  .navbar {
-    display: flex;
-
-    & a {
-      display: flex;
-      align-items: center;
-      text-decoration: none;
-      padding: 0 10px;
-      font-weight: bold;
-      color: black;
-
-      &:hover {
-        background-color: #c2bfbf;
-      }
-
-      &.active {
-        background-color: #bea3a3;
-      }
-    }
-  }
-}

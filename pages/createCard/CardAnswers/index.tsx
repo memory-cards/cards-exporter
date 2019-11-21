@@ -56,9 +56,19 @@ const CardAnswers = ({ answers, updateAnswers, cardType }: Props) => {
   };
 
   return (
-    <div>
+    <>
+      <div className="d-flex justify-content-between mb-3">
+        <label htmlFor="card-comment">Answers</label>
+        <button
+          className="btn btn-primary btn-sm"
+          type="button"
+          onClick={addAnswer}
+        >
+          Add answer
+        </button>
+      </div>
       {answers.map(({ text, id }) => (
-        <div className="input-group">
+        <div className="input-group mb-1">
           {cardType === CardType.CHOOSE_OPTIONS && (
             <div className="input-group-prepend">
               <div className="input-group-text">
@@ -81,7 +91,7 @@ const CardAnswers = ({ answers, updateAnswers, cardType }: Props) => {
           <div className="input-group-append">
             <button
               name={id}
-              className="btn btn-outline-secondary"
+              className="btn btn-outline-danger"
               type="button"
               onClick={removeAnswer}
             >
@@ -90,14 +100,7 @@ const CardAnswers = ({ answers, updateAnswers, cardType }: Props) => {
           </div>
         </div>
       ))}
-      <button
-        className="btn btn-outline-secondary"
-        type="button"
-        onClick={addAnswer}
-      >
-        Add answer
-      </button>
-    </div>
+    </>
   );
 };
 

@@ -47,7 +47,7 @@ describe("With Enzyme", () => {
     header.setProps({ router: newRouter });
 
     expect(header.find(".active").length).toBe(1);
-    expect(header.find(".active").text()).toBe("Filter cards page");
+    expect(header.find(".active").text()).toBe("Filter cards");
   });
 });
 

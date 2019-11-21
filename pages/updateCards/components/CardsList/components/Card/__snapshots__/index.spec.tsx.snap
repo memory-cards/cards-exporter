@@ -11,12 +11,12 @@ exports[`With Snapshot Testing IndexPage shows "Cards Exporter" 1`] = `
   <br />
   <div>
     <span
-      className="tag"
+      className="badge badge-info mx-1"
     >
       js
     </span>
     <span
-      className="tag"
+      className="badge badge-info mx-1"
     >
       ts
     </span>

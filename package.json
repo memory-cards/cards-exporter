@@ -82,7 +82,7 @@
     "json5": "^2.1.0",
     "next": "^7.0.2",
     "node-mocks-http": "^1.7.3",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "react": "^16.6.0",
     "react-bootstrap-typeahead": "^3.4.7",
     "react-dom": "^16.6.0",

@@ -65,7 +65,7 @@
     "@zeit/next-sass": "^1.0.1",
     "@zeit/next-typescript": "^1.1.1",
     "anki-apkg-export": "^4.0.2",
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "bootstrap": "^4.3.1",
     "card-types": "https://github.com/memory-cards/card-types.git#master",
     "coveralls": "^3.0.2",

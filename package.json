@@ -86,7 +86,7 @@
     "react": "^16.6.0",
     "react-bootstrap-typeahead": "^3.4.7",
     "react-dom": "^16.6.0",
-    "react-draft-wysiwyg": "^1.13.2",
+    "react-draft-wysiwyg": "^1.14.6",
     "react-frame-component": "^4.1.1",
     "react-test-renderer": "^16.6.0",
     "shx": "^0.3.2",
